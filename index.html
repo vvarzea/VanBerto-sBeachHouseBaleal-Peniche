@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>VanBerto's Beach House – Guia de Peniche</title>
+
+  <meta name="theme-color" content="#050b24" />
+
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Baloo+2:wght@600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <!-- Selector de idioma -->
+    <div class="lang-switcher">
+      <button id="btn-pt" class="lang-btn active" data-lang="pt">PT</button>
+      <button id="btn-en" class="lang-btn" data-lang="en">EN</button>
+      <button id="btn-es" class="lang-btn" data-lang="es">ES</button>
+      <button id="btn-fr" class="lang-btn" data-lang="fr">FR</button>
+      <button id="btn-install" class="install-btn" hidden>Instalar</button>
+    </div>
+
+    <div class="header-inner">
+      <img src="logo-vanbertos.png" alt="Logótipo VanBerto's Beach House" class="logo-img" />
+
+      <div class="brand-block">
+        <div class="brand-title" id="brand-title">
+          Peniche – "Capital da Onda e do Surf"
+        </div>
+        <div class="brand-subtitle" id="brand-tagline">
+          Guia digital para hóspedes do VanBerto's Beach House
+        </div>
+      </div>
+    </div>
+  </header>
+  <main class="container">
+    <section class="intro">
+      <h1 id="main-heading">Dicas para aproveitar Peniche</h1>
+      <p class="subtitle" id="subtitle">
+        Escolhe uma categoria, pesquisa por palavra-chave ou abre um local para ver mais detalhes e o percurso no Google Maps.
+      </p>
+    </section>
+
+
+    <!-- 🌤️ Meteorologia (Peniche & Baleal) -->
+    <section id="home-meteo" class="home-meteo" aria-live="polite">
+      <div class="home-meteo-head">
+        <div class="home-meteo-title">🌤️ Meteorologia · Peniche &amp; Baleal</div>
+        <div id="home-meteo-updated" class="home-meteo-updated">A carregar…</div>
+      </div>
+
+      <div class="home-meteo-grid">
+        <div class="home-meteo-card">
+          <div class="home-meteo-card-title">Hoje</div>
+          <div id="home-meteo-today" class="home-meteo-main">—</div>
+          <div id="home-meteo-today-extra" class="home-meteo-sub">—</div>
+        </div>
+
+        <div class="home-meteo-card">
+          <div class="home-meteo-card-title">Amanhã</div>
+          <div id="home-meteo-tomorrow" class="home-meteo-main">—</div>
+          <div id="home-meteo-tomorrow-extra" class="home-meteo-sub">—</div>
+        </div>
+
+        <div class="home-meteo-card home-meteo-card-wide">
+          <div class="home-meteo-card-title">🌊 Mar &amp; Surf</div>
+          <div id="home-surf" class="home-meteo-main">—</div>
+          <div id="home-surf-extra" class="home-meteo-sub">—</div>
+        </div>
+      </div>
+    </section>
+<!-- 🚨 Contactos de Emergência -->
+    <details class="emergency-section" id="emergency-details">
+      <summary id="emergency-title">🚨 Contactos de emergência e números úteis</summary>
+      <div class="emergency-grid">
+        <a href="tel:112" class="emergency-item">
+          <span class="e-label">Emergência geral</span>
+          <span class="e-name">🚒🚑🚓 Emergências</span>
+          <span class="e-num">112</span>
+        </a>
+        <a href="tel:+351262780310" class="emergency-item">
+          <span class="e-label">Hospital</span>
+          <span class="e-name">🏥 Hospital de Peniche</span>
+          <span class="e-num">262 780 310</span>
+        </a>
+        <a href="tel:+351262785117" class="emergency-item">
+          <span class="e-label">Segurança</span>
+          <span class="e-name">👮 GNR Peniche</span>
+          <span class="e-num">262 785 117</span>
+        </a>
+        <a href="tel:+351262782135" class="emergency-item">
+          <span class="e-label">Farmácia</span>
+          <span class="e-name">💊 Farmácia Central</span>
+          <span class="e-num">262 782 135</span>
+        </a>
+        <a href="tel:+351262782100" class="emergency-item">
+          <span class="e-label">Farmácia</span>
+          <span class="e-name">💊 Farmácia Proença</span>
+          <span class="e-num">262 782 100</span>
+        </a>
+        <a href="tel:+351262782415" class="emergency-item">
+          <span class="e-label">Farmácia</span>
+          <span class="e-name">💊 Farmácia Bento</span>
+          <span class="e-num">262 782 415</span>
+        </a>
+        <a href="tel:+351262759171" class="emergency-item">
+          <span class="e-label">Farmácia (Atouguia)</span>
+          <span class="e-name">💊 Farmácia Confiança</span>
+          <span class="e-num">262 759 171</span>
+        </a>
+        <a href="tel:+351262789500" class="emergency-item">
+          <span class="e-label">Táxi</span>
+          <span class="e-name">🚕 Táxi Peniche</span>
+          <span class="e-num">262 789 500</span>
+        </a>
+        <a href="tel:+351262789620" class="emergency-item">
+          <span class="e-label">Câmara Municipal</span>
+          <span class="e-name">🏛️ CM Peniche</span>
+          <span class="e-num">262 789 620</span>
+        </a>
+      </div>
+    </details>
+
+    <!-- Barra de pesquisa -->
+    <section class="search-row">
+      <input
+        type="search"
+        id="search-input"
+        placeholder="🔍 Procurar por praia, restaurante, pizza, sushi..."
+        aria-label="Pesquisar locais"
+      />
+    </section>
+
+    <!-- Filtros -->
+    <section class="filters">
+      <button class="filter-btn active" data-category="tudo" id="btn-cat-main">Menus principais</button>
+      <button class="filter-btn" data-category="favoritos" id="btn-cat-favs">⭐ Favoritos</button>
+      <button class="filter-btn" data-category="Praias" id="btn-cat-praias">Praias</button>
+      <button class="filter-btn" data-category="Locais" id="btn-cat-locais">Locais de interesse</button>
+      <button class="filter-btn" data-category="Supermercados" id="btn-cat-super">Supermercados</button>
+      <button class="filter-btn" data-category="Restaurantes" id="btn-cat-rest">Restaurantes</button>
+      <button class="filter-btn" data-category="Churrasqueiras" id="btn-cat-churras">Churrasqueiras</button>
+      <button class="filter-btn" data-category="Bares" id="btn-cat-bares">Bares</button>
+      <button class="filter-btn" data-category="Eventos" id="btn-cat-eventos">📅 Eventos</button>
+      <button class="filter-btn" data-category="FastFood" id="btn-cat-fast">Fast-Food</button>
+    </section>
+
+    <!-- Botão mapa geral -->
+    <section class="map-all-wrapper">
+      <button class="map-all-btn" id="btn-map-all">
+        🗺️ Ver todas as localizações no mapa
+      </button>
+      <button class="share-favs-btn" id="btn-share-favs">
+        🔗 Partilhar favoritos (QR)
+      </button>
+    </section>
+
+    <!-- Cards -->
+    
+    <!-- 📅 Calendário (aparece na categoria Eventos) -->
+    <section id="events-calendar-section" class="mini-cal" hidden aria-label="Calendário de eventos">
+      <div class="mini-cal-head">
+        <div class="mini-cal-title">📅 Calendário de eventos</div>
+        <div class="mini-cal-controls">
+          <button class="mini-cal-btn" id="cal-prev" aria-label="Mês anterior">‹</button>
+          <div class="mini-cal-month" id="cal-month">—</div>
+          <button class="mini-cal-btn" id="cal-next" aria-label="Mês seguinte">›</button>
+        </div>
+      </div>
+
+      <div class="mini-cal-week" aria-hidden="true">
+        <span>Seg</span><span>Ter</span><span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span><span>Dom</span>
+      </div>
+
+      <div class="mini-cal-grid" id="cal-grid"></div>
+
+      <div class="mini-cal-events">
+        <div class="mini-cal-events-title" id="cal-events-title">Eventos</div>
+        <div id="cal-events-list" class="mini-cal-events-list">Seleciona um dia para ver eventos.</div>
+      </div>
+    </section>
+
+
+    <section id="cards-container" class="cards" aria-live="polite"></section>
+  </main>
+
+  <!-- Voltar ao topo -->
+  <button id="scroll-top" class="scroll-top" aria-label="Voltar ao topo">⬆️</button>
+
+
+  <!-- Modal de detalhes -->
+  <div id="detail-modal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-dialog" role="dialog" aria-modal="true">
+      <button class="modal-close" id="modal-close-btn" aria-label="Fechar">✕</button>
+
+      <img id="modal-photo" class="modal-photo" alt="" loading="lazy" hidden / referrerpolicy="no-referrer">
+
+      <div class="modal-header">
+        <h2 id="modal-title">Nome do local</h2>
+        <button id="fav-toggle" class="fav-toggle" aria-label="Adicionar aos favoritos">☆</button>
+      </div>
+      <p class="modal-category" id="modal-category"></p>
+
+      <!-- Dica da Vanda e do Berto -->
+      <div id="modal-owner-tip" style="display:none; background:linear-gradient(135deg,rgba(245,184,0,0.10),rgba(244,124,32,0.06)); border:1px solid rgba(245,184,0,0.22); border-radius:10px; padding:10px 13px; font-size:0.84rem; color:rgba(255,255,255,0.88); margin-bottom:10px; align-items:flex-start; gap:8px;">
+        <span style="font-size:1.1rem;flex-shrink:0">🤙</span>
+        <div>
+          <span style="display:block;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.08em;color:#f5b800;font-weight:700;margin-bottom:2px">Dica da Vanda e do Berto</span>
+          <span id="modal-owner-tip-text"></span>
+        </div>
+      </div>
+
+      <div class="modal-tabs">
+        <button class="tab-btn active" data-tab="info" id="tab-info">ℹ️ Info</button>
+        <button class="tab-btn" data-tab="event" id="tab-event">📅 Evento</button>
+        <button class="tab-btn" data-tab="map" id="tab-map">🗺️ Mapa</button>
+      </div>
+
+      <div class="modal-content">
+  <!-- 🌤️ Meteorologia -->
+  <div id="modal-meteo" class="modal-meteo">
+    <div class="meteo-local">🌤️ Peniche & Baleal</div>
+    <div id="meteo-info">A carregar meteorologia…</div>
+  </div>
+
+        <div class="tab-panel active" id="panel-info">
+          <p id="modal-desc"></p>
+          <div class="quick-actions" id="modal-actions" hidden>
+            <button id="btn-call" class="primary-btn">📞 Ligar</button>
+            <button id="btn-whatsapp" class="ghost-btn">💬 WhatsApp</button>
+          </div>
+        </div>
+
+       
+
+        
+        <div class="tab-panel" id="panel-event">
+          <div class="event-box">
+            <p class="event-date" id="event-date"></p>
+            <p class="event-meta" id="event-meta"></p>
+            <div class="event-actions">
+              <button id="event-add-calendar" class="primary-btn">📅 Adicionar ao calendário</button>
+              <button id="event-copy" class="ghost-btn">📋 Copiar detalhes</button>
+            </div>
+            <p class="event-note" id="event-note"></p>
+          </div>
+        </div>
+
+        <div class="tab-panel" id="panel-map">
+          <div class="map-preview">
+            <iframe id="modal-map-iframe" title="Mapa" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+          <p id="modal-map-text"></p>
+          <button id="modal-open-maps" class="primary-btn">
+            📍 Abrir no Google Maps
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Modal QR Favoritos -->
+  <div id="qr-modal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-dialog" role="dialog" aria-modal="true">
+      <button class="modal-close" id="qr-close-btn" aria-label="Fechar">✕</button>
+
+      <div class="modal-header">
+        <h2 id="qr-title">Partilhar favoritos</h2>
+      </div>
+
+      <div class="modal-content">
+  <!-- 🌤️ Meteorologia -->
+  <div id="modal-meteo" class="modal-meteo">
+    <div class="meteo-local">🌤️ Peniche & Baleal</div>
+    <div id="meteo-info">A carregar meteorologia…</div>
+  </div>
+
+        <p id="qr-text" class="qr-text"></p>
+        <div class="qr-wrap">
+          <canvas id="qr-canvas" width="220" height="220" aria-label="QR code"></canvas>
+        </div>
+        <div class="qr-actions">
+          <button id="qr-copy" class="primary-btn">📋 Copiar link</button>
+          <button id="qr-clear" class="ghost-btn">🗑️ Limpar favoritos</button>
+        </div>
+        <p class="qr-hint" id="qr-hint"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contacto e rodapé -->
+  <div class="contact-bottom" style="gap:10px;flex-wrap:wrap;">
+    <a href="tel:+351966944973" class="contact-btn" id="contact-btn">
+      📱 966 944 973
+    </a>
+
+    <a href="https://wa.me/351966944973" target="_blank" rel="noopener noreferrer"
+       class="contact-btn"
+       style="background:linear-gradient(135deg,#25d366,#128c4e);color:#fff;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.558 4.116 1.535 5.845L.057 23.454a.75.75 0 0 0 .918.918l5.65-1.48A11.94 11.94 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75a9.726 9.726 0 0 1-4.964-1.36l-.355-.212-3.683.965.981-3.586-.232-.368A9.726 9.726 0 0 1 2.25 12C2.25 6.615 6.615 2.25 12 2.25S21.75 6.615 21.75 12 17.385 21.75 12 21.75z"/></svg>
+      WhatsApp
+    </a>
+  </div>
+
+  <footer>
+    <span id="footer-line1">📍 VanBerto's Beach House · Baleal · Peniche</span>
+    <span id="footer-line2">🌊 Guia rápido para aproveitares o melhor da tua estadia</span>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    // Registo do service worker para PWA
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('service-worker.js').catch(console.error);
+      });
+    }
+  </script>
+</body>
+</html>
