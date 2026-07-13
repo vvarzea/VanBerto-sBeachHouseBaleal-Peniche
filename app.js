@@ -2165,6 +2165,55 @@ try{ toggleEventsCalendar(false); }catch{}
 }
 
 
+/* ==============================
+   SECÇÕES RETRÁTEIS (Meteorologia / Informação da Casa / Emergências)
+============================== */
+(function initCollapsibleHomeSections(){
+  const LS_KEY = "vb_collapsed_sections_v1";
+
+  function loadCollapsedState(){
+    try {
+      const raw = localStorage.getItem(LS_KEY);
+      if (!raw) return {};
+      return JSON.parse(raw) || {};
+    } catch { return {}; }
+  }
+
+  function saveCollapsedState(state){
+    try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch {}
+  }
+
+  function applyState(section, toggleBtn, collapsed){
+    section.classList.toggle("is-collapsed", collapsed);
+    if (toggleBtn) toggleBtn.setAttribute("aria-expanded", collapsed ? "false" : "true");
+  }
+
+  const state = loadCollapsedState();
+  const heads = document.querySelectorAll(".home-meteo-head[data-toggle-section]");
+
+  heads.forEach(head => {
+    const id = head.getAttribute("data-toggle-section");
+    const section = document.getElementById(id);
+    const toggleBtn = head.querySelector(".home-meteo-toggle");
+    if (!section) return;
+
+    // Aplica estado guardado (por omissão: aberto)
+    applyState(section, toggleBtn, !!state[id]);
+
+    head.addEventListener("click", (ev) => {
+      // Evita fechar se o clique foi num link/botão interno com a sua própria ação (ex: copiar WiFi)
+      if (ev.target.closest("#wifi-copy-btn")) return;
+
+      const isCollapsed = section.classList.contains("is-collapsed");
+      const next = !isCollapsed;
+      applyState(section, toggleBtn, next);
+      state[id] = next;
+      saveCollapsedState(state);
+    });
+  });
+})();
+
+
 // --------- INICIAL ---------
 loadFavoritos();
 setLanguage(loadLanguage());
