@@ -2240,8 +2240,9 @@ try{ toggleEventsCalendar(false); }catch{}
     const toggleBtn = head.querySelector(".home-meteo-toggle");
     if (!section) return;
 
-    // Aplica estado guardado (por omissão: aberto)
-    applyState(section, toggleBtn, !!state[id]);
+    // Aplica estado guardado (por omissão: fechado)
+    const collapsed = state[id] === undefined ? true : !!state[id];
+    applyState(section, toggleBtn, collapsed);
 
     head.addEventListener("click", (ev) => {
       // Evita fechar se o clique foi num link/botão interno com a sua própria ação (ex: copiar WiFi)
