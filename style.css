@@ -1107,6 +1107,24 @@ button, .filter-btn, .lang-btn {
   color: #ffffff;
 }
 
+.home-link-card{
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.home-link-card:hover,
+.home-link-card:focus-visible{
+  transform: translateY(-2px);
+  border-color: rgba(242, 166, 90, 0.55);
+}
+
+.home-link-card .home-meteo-main::after{
+  content: " ↗";
+  opacity: 0.7;
+}
+
 .home-sos-note{
   margin-top: 10px;
   padding: 8px 12px;
