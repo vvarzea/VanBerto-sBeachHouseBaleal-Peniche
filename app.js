@@ -1,6 +1,6 @@
 
 function isFoodBizCategory(cat){
-  return cat === "Restaurantes" || cat === "Bares" || cat === "FastFood" || cat === "Churrasqueiras";
+  return cat === "Restaurantes" || cat === "Bares" || cat === "FastFood" || cat === "Churrasqueiras" || cat === "Farmacias";
 }
 
 // --------- LOCALIZAÇÃO DA CASA ---------
@@ -133,6 +133,7 @@ const btnFavs = document.getElementById("btn-cat-favs");
 const btnPraias = document.getElementById("btn-cat-praias");
 const btnLocais = document.getElementById("btn-cat-locais");
 const btnSuper = document.getElementById("btn-cat-super");
+const btnFarm = document.getElementById("btn-cat-farm");
 const btnRest = document.getElementById("btn-cat-rest");
 const btnChurras = document.getElementById("btn-cat-churras");
 const btnBares = document.getElementById("btn-cat-bares");
@@ -196,6 +197,12 @@ const iconByCat = {
       <path d="M5 10c0-3 3-5 7-5s7 2 7 5"/>
       <path d="M4 13h16"/>
       <path d="M6 18h12"/>
+    </svg>`,
+  Farmacias:
+    `<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="3" width="18" height="18" rx="4"/>
+      <path d="M12 8v8"/>
+      <path d="M8 12h8"/>
     </svg>`
 };
 
@@ -212,6 +219,7 @@ const imgByCat = {
   Churrasqueiras: svgDataUri("Churrasqueiras", "#f97316", "#b91c1c", "🔥"),
   Bares: svgDataUri("Bares", "#0ea5e9", "#6366f1", "🍹"),
   FastFood: svgDataUri("Fast food", "#ec4899", "#facc15", "🍔"),
+  Farmacias: svgDataUri("Farmácias", "#22c55e", "#0ea5e9", "💊"),
   Eventos: svgDataUri("Eventos", "#22c55e", "#0ea5e9", "📅")
 };
 
@@ -447,6 +455,92 @@ const data = {
       descFR: "Pratique pour les courses rapides du quotidien à bons prix.",
       tipVB: "Muito perto do centro — ideal quando só precisas de algumas coisas.",
       mapa: "Aldi Peniche"
+    }
+  ],
+  Farmacias: [
+    {
+      nome: "Farmácia Central",
+      descPT: "Farmácia no centro de Peniche, na Rua José Estevão.",
+      descEN: "Pharmacy in central Peniche, on Rua José Estevão.",
+      descES: "Farmacia en el centro de Peniche, en la Rua José Estevão.",
+      descFR: "Pharmacie au centre de Peniche, Rua José Estevão.",
+      tipVB: "Fica mesmo no centro da cidade — fácil de combinar com outras compras.",
+      mapa: "Farmácia Central, Rua José Estevão 16, Peniche",
+      telefone: "262782135",
+      horarioPT: "Confirma o horário ao telefone ou no Google Maps (pode variar por época).",
+      horarioEN: "Confirm hours by phone or on Google Maps (may vary by season)."
+    },
+    {
+      nome: "Farmácia Proença",
+      descPT: "Farmácia na Praça Jacob Rodrigues Pereira, junto à zona da Ajuda.",
+      descEN: "Pharmacy on Praça Jacob Rodrigues Pereira, near Ajuda.",
+      descES: "Farmacia en la Praça Jacob Rodrigues Pereira, cerca de Ajuda.",
+      descFR: "Pharmacie sur la Praça Jacob Rodrigues Pereira, près d'Ajuda.",
+      tipVB: "Costuma ter horário alargado — boa opção se precisares mais tarde.",
+      mapa: "Farmácia Proença, Praça Jacob Rodrigues Pereira 14-15, Peniche",
+      telefone: "262782100",
+      horarioPT: "Aproximadamente 09:00–19:00 (confirma localmente, pode variar).",
+      horarioEN: "Roughly 09:00–19:00 (please confirm locally, may vary)."
+    },
+    {
+      nome: "Farmácia Higiénica",
+      descPT: "Farmácia na Rua António da Conceição Bento, em Peniche.",
+      descEN: "Pharmacy on Rua António da Conceição Bento, in Peniche.",
+      descES: "Farmacia en la Rua António da Conceição Bento, en Peniche.",
+      descFR: "Pharmacie Rua António da Conceição Bento, à Peniche.",
+      tipVB: "Boa opção alternativa se a farmácia central estiver cheia.",
+      mapa: "Farmácia Higiénica, Rua António da Conceição Bento 21-B, Peniche",
+      telefone: "262782415",
+      horarioPT: "Confirma o horário ao telefone ou no Google Maps (pode variar por época).",
+      horarioEN: "Confirm hours by phone or on Google Maps (may vary by season)."
+    },
+    {
+      nome: "Farmácia Santo Estêvão",
+      descPT: "Farmácia em Ferrel, muito perto do VanBerto's Beach House.",
+      descEN: "Pharmacy in Ferrel, very close to VanBerto's Beach House.",
+      descES: "Farmacia en Ferrel, muy cerca de VanBerto's Beach House.",
+      descFR: "Pharmacie à Ferrel, tout près de VanBerto's Beach House.",
+      tipVB: "A mais perto de casa! Ótima para uma emergência rápida sem ires até Peniche.",
+      mapa: "Farmácia Santo Estêvão, Rua do Brejo 6-B, Ferrel, Peniche",
+      telefone: "262758029",
+      horarioPT: "Aproximadamente 09:00–13:00 e 14:30–19:30 (confirma localmente).",
+      horarioEN: "Roughly 09:00–13:00 and 14:30–19:30 (please confirm locally)."
+    },
+    {
+      nome: "Farmácia Serra",
+      descPT: "Farmácia em Serra d'El-Rei, na Avenida da Liberdade (EN 114).",
+      descEN: "Pharmacy in Serra d'El-Rei, on Avenida da Liberdade (EN 114).",
+      descES: "Farmacia en Serra d'El-Rei, en la Avenida da Liberdade (EN 114).",
+      descFR: "Pharmacie à Serra d'El-Rei, Avenida da Liberdade (EN 114).",
+      tipVB: "Útil se estiveres a passar por Serra d'El-Rei ou vindo de Óbidos.",
+      mapa: "Farmácia Serra, Avenida da Liberdade 78, Serra d'El-Rei",
+      telefone: "262909122",
+      horarioPT: "Confirma o horário ao telefone ou no Google Maps (pode variar por época).",
+      horarioEN: "Confirm hours by phone or on Google Maps (may vary by season)."
+    },
+    {
+      nome: "Farmácia Santa Luzia",
+      descPT: "Farmácia em Atouguia da Baleia, junto à Praça Geraldes.",
+      descEN: "Pharmacy in Atouguia da Baleia, near Praça Geraldes.",
+      descES: "Farmacia en Atouguia da Baleia, junto a la Praça Geraldes.",
+      descFR: "Pharmacie à Atouguia da Baleia, près de la Praça Geraldes.",
+      tipVB: "Boa opção se estiveres do lado de Atouguia da Baleia.",
+      mapa: "Farmácia Santa Luzia, Praça Geraldes 1, Atouguia da Baleia",
+      telefone: "262769265",
+      horarioPT: "Aproximadamente 09:00–13:00 e 15:00–20:00 (confirma localmente).",
+      horarioEN: "Roughly 09:00–13:00 and 15:00–20:00 (please confirm locally)."
+    },
+    {
+      nome: "Farmácia Confiança",
+      descPT: "Farmácia na Rua José Augusto Vaz, do lado de Atouguia da Baleia.",
+      descEN: "Pharmacy on Rua José Augusto Vaz, on the Atouguia da Baleia side.",
+      descES: "Farmacia en la Rua José Augusto Vaz, del lado de Atouguia da Baleia.",
+      descFR: "Pharmacie Rua José Augusto Vaz, côté Atouguia da Baleia.",
+      tipVB: "Mais uma opção se as farmácias do centro estiverem fechadas.",
+      mapa: "Farmácia Confiança, Rua José Augusto Vaz 5, Atouguia da Baleia",
+      telefone: "262759171",
+      horarioPT: "Confirma o horário ao telefone ou no Google Maps (pode variar por época).",
+      horarioEN: "Confirm hours by phone or on Google Maps (may vary by season)."
     }
   ],
   Restaurantes: [
@@ -908,6 +1002,7 @@ function labelCategoria(cat) {
       Churrasqueiras: "Churrasqueiras",
       Bares: "Bares",
       FastFood: "Fast-Food",
+      Farmacias: "Farmácias",
       Eventos: "Eventos"
     },
     en: {
@@ -918,6 +1013,7 @@ function labelCategoria(cat) {
       Churrasqueiras: "Grill & BBQ",
       Bares: "Bars",
       FastFood: "Fast food",
+      Farmacias: "Pharmacies",
       Eventos: "Local events"
     },
     es: {
@@ -928,6 +1024,7 @@ function labelCategoria(cat) {
       Churrasqueiras: "Parrillas",
       Bares: "Bares",
       FastFood: "Comida rápida",
+      Farmacias: "Farmacias",
       Eventos: "Eventos locales"
     },
     fr: {
@@ -938,6 +1035,7 @@ function labelCategoria(cat) {
       Churrasqueiras: "Grillades",
       Bares: "Bars",
       FastFood: "Fast-food",
+      Farmacias: "Pharmacies",
       Eventos: "Événements locaux"
     }
   };
@@ -1660,6 +1758,7 @@ function atualizarTextosEstaticos() {
       btnPraias: "Praias",
       btnLocais: "Locais de interesse",
       btnSuper: "Supermercados",
+      btnFarm: "Farmácias",
       btnRest: "Restaurantes",
       btnChurras: "Churrasqueiras",
       btnBares: "Bares",
@@ -1697,6 +1796,7 @@ function atualizarTextosEstaticos() {
       btnPraias: "Beaches",
       btnLocais: "Places of interest",
       btnSuper: "Supermarkets",
+      btnFarm: "Pharmacies",
       btnRest: "Restaurants",
       btnChurras: "Grill & BBQ",
       btnBares: "Bars",
@@ -1734,6 +1834,7 @@ function atualizarTextosEstaticos() {
       btnPraias: "Playas",
       btnLocais: "Lugares de interés",
       btnSuper: "Supermercados",
+      btnFarm: "Farmacias",
       btnRest: "Restaurantes",
       btnChurras: "Parrillas",
       btnBares: "Bares",
@@ -1771,6 +1872,7 @@ function atualizarTextosEstaticos() {
       btnPraias: "Plages",
       btnLocais: "Lieux d’intérêt",
       btnSuper: "Supermarchés",
+      btnFarm: "Pharmacies",
       btnRest: "Restaurants",
       btnChurras: "Grillades",
       btnBares: "Bars",
@@ -1812,6 +1914,7 @@ function atualizarTextosEstaticos() {
   btnPraias.textContent = t.btnPraias;
   btnLocais.textContent = t.btnLocais;
   btnSuper.textContent = t.btnSuper;
+  if (btnFarm) btnFarm.textContent = t.btnFarm;
   btnRest.textContent = t.btnRest;
   btnChurras.textContent = t.btnChurras;
   btnBares.textContent = t.btnBares;
@@ -2695,7 +2798,7 @@ function getHorario(cat, item){
   if(currentLang !== "pt" && item.horarioEN) return item.horarioEN;
 
   // Fallback: para sítios onde faz sentido mostrar horários
-  const needsHours = ["Restaurantes","Bares","FastFood","Supermercados","Churrasqueiras","Locais"].includes(cat);
+  const needsHours = ["Restaurantes","Bares","FastFood","Supermercados","Churrasqueiras","Locais","Farmacias"].includes(cat);
   if(needsHours){
     if(currentLang === "pt") return "Consulta o horário no Google Maps (pode variar por época).";
     if(currentLang === "es") return "Consulta el horario en Google Maps (puede variar).";
