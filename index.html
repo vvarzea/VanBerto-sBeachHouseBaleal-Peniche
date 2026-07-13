@@ -55,7 +55,7 @@
       <div class="home-meteo-head" data-toggle-section="home-meteo">
         <div class="home-meteo-head-left">
           <button type="button" class="home-meteo-toggle" aria-expanded="true" aria-controls="home-meteo-body">▾</button>
-          <div class="home-meteo-title">🌤️ Meteorologia · Peniche &amp; Baleal</div>
+          <div class="home-meteo-title" id="i18n-meteo-title">🌤️ Meteorologia · Peniche &amp; Baleal</div>
         </div>
         <div id="home-meteo-updated" class="home-meteo-updated">A carregar…</div>
       </div>
@@ -63,19 +63,19 @@
       <div class="home-meteo-body" id="home-meteo-body"><div class="home-meteo-body-inner">
       <div class="home-meteo-grid">
         <div class="home-meteo-card">
-          <div class="home-meteo-card-title">Hoje</div>
+          <div class="home-meteo-card-title" id="i18n-today-title">Hoje</div>
           <div id="home-meteo-today" class="home-meteo-main">—</div>
           <div id="home-meteo-today-extra" class="home-meteo-sub">—</div>
         </div>
 
         <div class="home-meteo-card">
-          <div class="home-meteo-card-title">Amanhã</div>
+          <div class="home-meteo-card-title" id="i18n-tomorrow-title">Amanhã</div>
           <div id="home-meteo-tomorrow" class="home-meteo-main">—</div>
           <div id="home-meteo-tomorrow-extra" class="home-meteo-sub">—</div>
         </div>
 
         <div class="home-meteo-card home-meteo-card-wide">
-          <div class="home-meteo-card-title">🌊 Mar &amp; Surf</div>
+          <div class="home-meteo-card-title" id="i18n-surf-title">🌊 Mar &amp; Surf</div>
           <div id="home-surf" class="home-meteo-main">—</div>
           <div id="home-surf-extra" class="home-meteo-sub">—</div>
         </div>
@@ -88,30 +88,30 @@
       <div class="home-meteo-head" data-toggle-section="home-house">
         <div class="home-meteo-head-left">
           <button type="button" class="home-meteo-toggle" aria-expanded="true" aria-controls="home-house-body">▾</button>
-          <div class="home-meteo-title">🏠 Informação da Casa</div>
+          <div class="home-meteo-title" id="i18n-house-title">🏠 Informação da Casa</div>
         </div>
       </div>
 
       <div class="home-meteo-body" id="home-house-body"><div class="home-meteo-body-inner">
       <div class="home-meteo-grid">
         <div class="home-meteo-card home-house-card">
-          <div class="home-meteo-card-title">📶 WiFi</div>
+          <div class="home-meteo-card-title" id="i18n-wifi-title">📶 WiFi</div>
           <div class="home-meteo-main" id="wifi-ssid">VanBerto's</div>
           <div class="home-meteo-sub home-house-wifi-row">
-            Password: <span id="wifi-pass">VanBertos2026</span>
+            <span id="i18n-wifi-password-label">Password:</span> <span id="wifi-pass">VanBertos2026</span>
             <button type="button" id="wifi-copy-btn" class="home-house-copy-btn">📋 Copiar</button>
           </div>
         </div>
 
         <div class="home-meteo-card home-house-card">
-          <div class="home-meteo-card-title">🔑 Check-in / Check-out</div>
+          <div class="home-meteo-card-title" id="i18n-checkin-title">🔑 Check-in / Check-out</div>
           <div class="home-meteo-main">14h00 → 11h00</div>
-          <div class="home-meteo-sub">Entrega das chaves em mão — o horário é combinado convosco antes da chegada.</div>
+          <div class="home-meteo-sub" id="i18n-checkin-sub">Entrega das chaves em mão — o horário é combinado convosco antes da chegada.</div>
         </div>
 
         <div class="home-meteo-card home-meteo-card-wide home-house-card">
-          <div class="home-meteo-card-title">📋 Regras da casa</div>
-          <ul class="home-house-rules">
+          <div class="home-meteo-card-title" id="i18n-rules-title">📋 Regras da casa</div>
+          <ul class="home-house-rules" id="i18n-rules-list">
             <li>🔇 Silêncio das 23h às 7h (período de descanso previsto na lei portuguesa)</li>
             <li>🚭 Não é permitido fumar dentro de casa</li>
             <li>🐾 Animais de estimação só mediante autorização prévia — fala connosco antes de reservar</li>
@@ -128,20 +128,20 @@
       <div class="home-meteo-head" data-toggle-section="home-sos">
         <div class="home-meteo-head-left">
           <button type="button" class="home-meteo-toggle" aria-expanded="true" aria-controls="home-sos-body">▾</button>
-          <div class="home-meteo-title">🚨 Emergências &amp; Saúde</div>
+          <div class="home-meteo-title" id="i18n-sos-title">🚨 Emergências &amp; Saúde</div>
         </div>
       </div>
 
       <div class="home-meteo-body" id="home-sos-body"><div class="home-meteo-body-inner">
       <div class="home-meteo-grid">
         <a href="tel:112" class="home-meteo-card home-sos-card home-sos-card-emergency">
-          <div class="home-meteo-card-title">Emergência nacional</div>
+          <div class="home-meteo-card-title" id="i18n-sos-emergency-title">Emergência nacional</div>
           <div class="home-meteo-main">🆘 112</div>
         </a>
 
         <a href="https://www.farmaciasdeservico.net/localidade/leiria/peniche" target="_blank" rel="noopener noreferrer" class="home-meteo-card home-sos-card">
-          <div class="home-meteo-card-title">Farmácia de serviço hoje</div>
-          <div class="home-meteo-main">💊 Ver farmácia</div>
+          <div class="home-meteo-card-title" id="i18n-sos-pharmacy-title">Farmácia de serviço hoje</div>
+          <div class="home-meteo-main" id="i18n-sos-pharmacy-main">💊 Ver farmácia</div>
         </a>
 
         <a href="tel:262790027" class="home-meteo-card home-sos-card">
@@ -150,12 +150,12 @@
         </a>
 
         <a href="tel:262109870" class="home-meteo-card home-sos-card">
-          <div class="home-meteo-card-title">PSP Peniche (não urgente)</div>
+          <div class="home-meteo-card-title" id="i18n-sos-police-title">PSP Peniche (não urgente)</div>
           <div class="home-meteo-main">👮 262 109 870</div>
         </a>
       </div>
 
-      <div class="home-sos-note">Em caso de emergência, liga sempre primeiro para o 112.</div>
+      <div class="home-sos-note" id="i18n-sos-note">Em caso de emergência, liga sempre primeiro para o 112.</div>
       </div></div>
     </section>
 
@@ -164,28 +164,28 @@
       <div class="home-meteo-head" data-toggle-section="home-practical">
         <div class="home-meteo-head-left">
           <button type="button" class="home-meteo-toggle" aria-expanded="true" aria-controls="home-practical-body">▾</button>
-          <div class="home-meteo-title">🚗 Praticidades do dia a dia</div>
+          <div class="home-meteo-title" id="i18n-practical-title">🚗 Praticidades do dia a dia</div>
         </div>
       </div>
 
       <div class="home-meteo-body" id="home-practical-body"><div class="home-meteo-body-inner">
       <div class="home-meteo-grid">
         <div class="home-meteo-card home-house-card">
-          <div class="home-meteo-card-title">🅿️ Estacionamento</div>
-          <div class="home-meteo-main">Grátis junto à casa</div>
-          <div class="home-meteo-sub">O parque de estacionamento junto ao prédio é gratuito, sem pagamento nem restrições — podes deixar o carro aí à vontade.</div>
+          <div class="home-meteo-card-title" id="i18n-parking-title">🅿️ Estacionamento</div>
+          <div class="home-meteo-main" id="i18n-parking-main">Grátis, mesmo à porta</div>
+          <div class="home-meteo-sub" id="i18n-parking-sub">O parque junto ao prédio é gratuito e sem restrições — podes deixar lá o carro durante toda a estadia.</div>
         </div>
 
         <div class="home-meteo-card home-house-card">
-          <div class="home-meteo-card-title">🚕 Transportes, táxi &amp; Uber</div>
-          <div class="home-meteo-main">Uber/Bolt existem, mas com menos carros</div>
-          <div class="home-meteo-sub">Peniche não tem uma grande rede de transportes públicos — ter carro é o mais prático. Uber e Bolt funcionam na zona, mas com menos motoristas do que em Lisboa (pode demorar mais). Táxi local: <a href="tel:262782687">262 782 687</a> ou <a href="tel:917296771">917 296 771</a>.</div>
+          <div class="home-meteo-card-title" id="i18n-transport-title">🚕 Transportes, táxi &amp; Uber</div>
+          <div class="home-meteo-main" id="i18n-transport-main">Uber e Bolt funcionam, mas com menos carros</div>
+          <div class="home-meteo-sub" id="i18n-transport-sub">Peniche não tem uma rede de transportes públicos muito forte, por isso ter carro é o mais prático. Uber e Bolt existem na zona, mas com menos motoristas do que em Lisboa — a espera pode ser maior. Preferes táxi? Liga para <a href="tel:262782687">262 782 687</a> ou <a href="tel:917296771">917 296 771</a>.</div>
         </div>
 
         <div class="home-meteo-card home-meteo-card-wide home-house-card">
-          <div class="home-meteo-card-title">🏧 Onde levantar dinheiro</div>
-          <div class="home-meteo-main">Multibanco na Estrada do Baleal</div>
-          <div class="home-meteo-sub">O multibanco mais próximo de casa fica na Estrada do Baleal (Casais do Baleal), a poucos minutos. Há mais opções no centro de Peniche. A maioria dos estabelecimentos aceita cartão/contactless, por isso não precisas de levar muito dinheiro em espécie.</div>
+          <div class="home-meteo-card-title" id="i18n-atm-title">🏧 Onde levantar dinheiro</div>
+          <div class="home-meteo-main" id="i18n-atm-main">Multibanco na Estrada do Baleal</div>
+          <div class="home-meteo-sub" id="i18n-atm-sub">O mais perto de casa fica na Estrada do Baleal, em Casais do Baleal, a poucos minutos. Há mais opções no centro de Peniche. Quase todos os estabelecimentos aceitam cartão, por isso raramente precisas de dinheiro vivo.</div>
         </div>
       </div>
       </div></div>
@@ -239,7 +239,7 @@
         </div>
       </div>
 
-      <div class="mini-cal-week" aria-hidden="true">
+      <div class="mini-cal-week" id="mini-cal-week" aria-hidden="true">
         <span>Seg</span><span>Ter</span><span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span><span>Dom</span>
       </div>
 

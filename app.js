@@ -70,9 +70,13 @@ if (wifiCopyBtn && wifiPassEl){
       try { document.execCommand("copy"); } catch {}
       document.body.removeChild(tmp);
     }
-    const original = wifiCopyBtn.textContent;
-    wifiCopyBtn.textContent = "✅ Copiado!";
-    setTimeout(() => { wifiCopyBtn.textContent = original; }, 1800);
+    const T = getHomeI18n();
+    wifiCopyBtn.dataset.justCopied = "1";
+    wifiCopyBtn.textContent = T.wifiCopied;
+    setTimeout(() => {
+      delete wifiCopyBtn.dataset.justCopied;
+      wifiCopyBtn.textContent = getHomeI18n().wifiCopyBtn;
+    }, 1800);
   });
 }
 
@@ -351,6 +355,8 @@ const data = {
       horarioEN: "Tue–Sun 10:00–13:00 and 14:00–18:00. Closed Mon.",
       descPT: "Museu dedicado à famosa renda de bilros de Peniche.",
       descEN: "Museum dedicated to Peniche’s traditional bobbin lace.",
+      descES: "Museo dedicado al famoso encaje de bolillos de Peniche.",
+      descFR: "Musée consacré à la célèbre dentelle aux fuseaux de Peniche.",
       mapa: "Museu da Renda de Bilros Peniche"
     },
     {
@@ -808,18 +814,24 @@ const data = {
       nome: "Mercado Municipal de Peniche",
       descPT: "Bom local para ver peixe fresco, produtos regionais e sentir o ritmo da cidade.",
       descEN: "Great place to see fresh fish, regional products and the town vibe.",
+      descES: "Buen lugar para ver pescado fresco, productos regionales y sentir el ritmo de la ciudad.",
+      descFR: "Bon endroit pour voir du poisson frais, des produits régionaux et sentir le rythme de la ville.",
       mapa: "Mercado Municipal de Peniche"
     },
     {
       nome: "Cabo Carvoeiro (pôr do sol)",
       descPT: "Miradouro com vistas incríveis. Sugestão: ir ao final da tarde para ver o pôr do sol.",
       descEN: "Viewpoint with amazing scenery. Tip: go in the late afternoon for sunset.",
+      descES: "Mirador con vistas increíbles. Consejo: ve al final de la tarde para ver la puesta de sol.",
+      descFR: "Point de vue avec des paysages incroyables. Astuce : viens en fin d'après-midi pour voir le coucher de soleil.",
       mapa: "Cabo Carvoeiro"
     },
     {
       nome: "Praia dos Supertubos (surf em época)",
       descPT: "Quando há provas, Supertubos recebe competições de surf. Confirma cartazes e redes sociais na semana.",
       descEN: "During event weeks, Supertubos hosts surf competitions. Check posters and social media that week.",
+      descES: "Cuando hay pruebas, Supertubos acoge competiciones de surf. Consulta carteles y redes sociales esa semana.",
+      descFR: "Lors des semaines d'événements, Supertubos accueille des compétitions de surf. Vérifie les affiches et les réseaux sociaux cette semaine-là.",
       mapa: "Praia dos Supertubos"
     }
 ,
@@ -827,6 +839,8 @@ const data = {
       nome: "🇵🇹 Feriado: Ano Novo",
       descPT: "Feriado nacional em Portugal.",
       descEN: "National holiday in Portugal.",
+      descES: "Festivo nacional en Portugal.",
+      descFR: "Jour férié national au Portugal.",
       mapa: "Portugal",
       dataISO: "2026-01-01",
       horaInicio: "09:00",
@@ -837,6 +851,8 @@ const data = {
       nome: "🎭 Carnaval (data habitual)",
       descPT: "Dia de Carnaval (tolerância de ponto em muitos locais). Confirma localmente.",
       descEN: "Carnival day (often optional). Please confirm locally.",
+      descES: "Día de Carnaval (a menudo opcional). Confirma localmente.",
+      descFR: "Jour de Carnaval (souvent facultatif). Merci de confirmer localement.",
       mapa: "Peniche",
       dataISO: "2026-02-17",
       horaInicio: "09:00",
@@ -847,6 +863,8 @@ const data = {
       nome: "✝️ Sexta-Feira Santa",
       descPT: "Feriado nacional (Sexta-Feira Santa).",
       descEN: "National holiday (Good Friday).",
+      descES: "Festivo nacional (Viernes Santo).",
+      descFR: "Jour férié national (Vendredi saint).",
       mapa: "Peniche",
       dataISO: "2026-04-03",
       horaInicio: "09:00",
@@ -857,6 +875,8 @@ const data = {
       nome: "🇵🇹 25 de Abril",
       descPT: "Dia da Liberdade (feriado nacional).",
       descEN: "Freedom Day (national holiday).",
+      descES: "Día de la Libertad (festivo nacional).",
+      descFR: "Jour de la Liberté (jour férié national).",
       mapa: "Peniche",
       dataISO: "2026-04-25",
       horaInicio: "09:00",
@@ -867,6 +887,8 @@ const data = {
       nome: "👷 Dia do Trabalhador",
       descPT: "1 de Maio (feriado nacional).",
       descEN: "Labour Day (national holiday).",
+      descES: "1 de mayo (festivo nacional).",
+      descFR: "1er mai (jour férié national).",
       mapa: "Peniche",
       dataISO: "2026-05-01",
       horaInicio: "09:00",
@@ -877,6 +899,8 @@ const data = {
       nome: "⛪ Corpo de Deus",
       descPT: "Corpo de Deus (feriado nacional).",
       descEN: "Corpus Christi (national holiday).",
+      descES: "Corpus Christi (festivo nacional).",
+      descFR: "Fête-Dieu (jour férié national).",
       mapa: "Peniche",
       dataISO: "2026-06-04",
       horaInicio: "09:00",
@@ -887,6 +911,8 @@ const data = {
       nome: "🇵🇹 Dia de Portugal",
       descPT: "10 de Junho (feriado nacional).",
       descEN: "Portugal Day (national holiday).",
+      descES: "10 de junio (festivo nacional).",
+      descFR: "10 juin (jour férié national).",
       mapa: "Peniche",
       dataISO: "2026-06-10",
       horaInicio: "09:00",
@@ -897,6 +923,8 @@ const data = {
       nome: "🎉 Festa em honra de N.ª Sr.ª da Boa Viagem (Peniche) — início",
       descPT: "Festa de Peniche em honra de N.ª Sr.ª da Boa Viagem (datas anunciadas: 10 de julho a 3 de agosto de 2026). Confirma programa.",
       descEN: "Peniche festivities (announced dates: 10 July to 3 Aug 2026). Please confirm programme.",
+      descES: "Fiesta de Peniche en honor de Nuestra Señora de la Buena Travesía (fechas anunciadas: 10 de julio a 3 de agosto de 2026). Confirma el programa.",
+      descFR: "Fête de Peniche en l'honneur de Notre-Dame du Bon Voyage (dates annoncées : du 10 juillet au 3 août 2026). Merci de confirmer le programme.",
       mapa: "Ribeira Antiga Peniche",
       dataISO: "2026-07-10",
       horaInicio: "12:00",
@@ -907,6 +935,8 @@ const data = {
       nome: "🏛️ Dia do Município / Feriado Municipal de Peniche",
       descPT: "Feriado municipal (Dia do Município) — 5 de agosto.",
       descEN: "Municipal holiday (Municipality Day) — 5 August.",
+      descES: "Festivo municipal (Día del Municipio) — 5 de agosto.",
+      descFR: "Jour férié municipal (Jour de la Municipalité) — 5 août.",
       mapa: "Câmara Municipal de Peniche",
       dataISO: "2026-08-05",
       horaInicio: "09:00",
@@ -917,6 +947,8 @@ const data = {
       nome: "🙏 Assunção de Nossa Senhora",
       descPT: "15 de agosto (feriado nacional).",
       descEN: "Assumption Day (national holiday).",
+      descES: "15 de agosto (festivo nacional).",
+      descFR: "15 août (jour férié national).",
       mapa: "Peniche",
       dataISO: "2026-08-15",
       horaInicio: "09:00",
@@ -927,6 +959,8 @@ const data = {
       nome: "🇵🇹 Implantação da República",
       descPT: "5 de outubro (feriado nacional).",
       descEN: "Republic Day (national holiday).",
+      descES: "5 de octubre (festivo nacional).",
+      descFR: "5 octobre (jour férié national).",
       mapa: "Peniche",
       dataISO: "2026-10-05",
       horaInicio: "09:00",
@@ -937,6 +971,8 @@ const data = {
       nome: "🕯️ Dia de Todos os Santos",
       descPT: "1 de novembro (feriado nacional).",
       descEN: "All Saints' Day (national holiday).",
+      descES: "1 de noviembre (festivo nacional).",
+      descFR: "1er novembre (jour férié national).",
       mapa: "Peniche",
       dataISO: "2026-11-01",
       horaInicio: "09:00",
@@ -947,6 +983,8 @@ const data = {
       nome: "🇵🇹 Restauração da Independência",
       descPT: "1 de dezembro (feriado nacional).",
       descEN: "Independence Restoration Day (national holiday).",
+      descES: "1 de diciembre (festivo nacional).",
+      descFR: "1er décembre (jour férié national).",
       mapa: "Peniche",
       dataISO: "2026-12-01",
       horaInicio: "09:00",
@@ -957,6 +995,8 @@ const data = {
       nome: "✨ Imaculada Conceição",
       descPT: "8 de dezembro (feriado nacional).",
       descEN: "Immaculate Conception (national holiday).",
+      descES: "8 de diciembre (festivo nacional).",
+      descFR: "8 décembre (jour férié national).",
       mapa: "Peniche",
       dataISO: "2026-12-08",
       horaInicio: "09:00",
@@ -967,6 +1007,8 @@ const data = {
       nome: "🎄 Natal",
       descPT: "25 de dezembro (feriado nacional).",
       descEN: "Christmas Day (national holiday).",
+      descES: "25 de diciembre (festivo nacional).",
+      descFR: "25 décembre (jour férié national).",
       mapa: "Peniche",
       dataISO: "2026-12-25",
       horaInicio: "09:00",
@@ -978,6 +1020,8 @@ const data = {
       link: "https://balealoffshorebeats.pt",
       descPT: "Festival no Baleal/Ferrel. Datas variam — consulta a agenda oficial.",
       descEN: "Festival in Baleal/Ferrel. Dates vary — check official agenda.",
+      descES: "Festival en Baleal/Ferrel. Las fechas varían — consulta la agenda oficial.",
+      descFR: "Festival à Baleal/Ferrel. Les dates varient — consulte l'agenda officiel.",
       mapa: "Baleal Ferrel",
       local: "Baleal"
     },
@@ -985,6 +1029,8 @@ const data = {
       nome: "⛪ Festas de Santo Estêvão (Baleal)",
       descPT: "Festas com procissão à volta da ilha. Datas variam — confirma na página oficial.",
       descEN: "Local festivities with procession around the island. Dates vary — please confirm.",
+      descES: "Fiestas con procesión alrededor de la isla. Las fechas varían — confirma en la página oficial.",
+      descFR: "Fêtes avec procession autour de l'île. Les dates varient — merci de confirmer sur la page officielle.",
       mapa: "Ilha do Baleal",
       local: "Baleal"
     }
@@ -1112,9 +1158,7 @@ function gerarCategoriasPrincipais() {
   Object.keys(data).forEach(cat => {
     const label = labelCategoria(cat);
     const icon = iconByCat[cat] || "📍";
-    const texto = currentLang === "pt"
-      ? `Tocar para ver todas as opções de ${label.toLowerCase()}.`
-      : `Tap to see all ${label.toLowerCase()}.`;
+    const texto = getHomeI18n().tapToSeeAll(label);
 
     const card = document.createElement("article");
     card.className = "card";
@@ -1128,7 +1172,7 @@ function gerarCategoriasPrincipais() {
       </div>
       <div class="card-desc">${texto}</div>
       <div class="card-footer">
-        <span class="card-meta">${currentLang === "pt" ? "Sugestões do VanBerto's" : "VanBerto's suggestions"}</span>
+        <span class="card-meta">${getHomeI18n().vanBertoSuggestions}</span>
       </div>
     `;
 
@@ -1196,7 +1240,7 @@ function gerarCardsDeCategoria(cat) {
         <div class="card-category">${labelCat}</div>
         <div class="card-desc">${descText}</div>
         <div class="card-footer">
-          <span class="card-meta">${currentLang === "pt" ? "Tocar para ver detalhes" : "Tap for details"}</span>
+          <span class="card-meta">${getHomeI18n().tapForDetails}</span>
           <button class="fav-btn" aria-label="Favorito">${fav ? "★" : "☆"}</button>
         </div>
       `;
@@ -1220,10 +1264,7 @@ function gerarCardsDeCategoria(cat) {
     const msg = document.createElement("p");
     msg.style.color = "#9ca3af";
     msg.style.fontSize = "13px";
-    msg.textContent =
-      currentLang === "pt"
-        ? "Nenhum resultado para esta pesquisa."
-        : "No results for this search.";
+    msg.textContent = getHomeI18n().noResults;
     cardsContainer.appendChild(msg);
   }
 }
@@ -1272,7 +1313,7 @@ function gerarFavoritos() {
         <div class="card-category">${labelCat}</div>
         <div class="card-desc">${descText}</div>
         <div class="card-footer">
-          <span class="card-meta">${currentLang === "pt" ? "Tocar para ver detalhes" : "Tap for details"}</span>
+          <span class="card-meta">${getHomeI18n().tapForDetails}</span>
           <button class="fav-btn" aria-label="Favorito">★</button>
         </div>
       `;
@@ -1521,11 +1562,12 @@ function renderFoodDetails(item){
   const l = L[currentLang] || L.en;
 
   // defaults leves (sem inventar factos específicos)
-  const horario = item.horario || (currentLang === "pt" ? "Confirmar no Google Maps" : "Check on Google Maps");
+  const Tdef = getHomeI18n();
+  const horario = item.horario || Tdef.defaultHorario;
   const preco = item.preco || "€€";
-  const tipo = item.tipoComida || item.tipo || (currentLang === "pt" ? "Restaurante/Bar" : "Restaurant/Bar");
-  const reservas = item.reservas || (currentLang === "pt" ? "Opcional" : "Optional");
-  const takeaway = item.takeaway || (currentLang === "pt" ? "Depende do local" : "Depends on venue");
+  const tipo = item.tipoComida || item.tipo || Tdef.defaultTipo;
+  const reservas = item.reservas || Tdef.defaultReservas;
+  const takeaway = item.takeaway || Tdef.defaultTakeaway;
   const dica = item.dica || smartFoodTip(item);
 
   const chips = [
@@ -1590,7 +1632,7 @@ function setupQuickActions(item, cat){
   // Ligar
   if(phone){
     btnCall.hidden = false;
-    btnCall.textContent = currentLang === "pt" ? "📞 Ligar" : "📞 Call";
+    btnCall.textContent = getHomeI18n().callBtn;
     btnCall.onclick = () => {
       const p = normalizePhone(phone);
       const digits = p.replace(/[^\d]/g,"");
@@ -1599,7 +1641,7 @@ function setupQuickActions(item, cat){
   } else {
     // fallback útil: abre o local no Google Maps para ver contacto
     btnCall.hidden = false;
-    btnCall.textContent = currentLang === "pt" ? "📞 Contacto (Google)" : "📞 Contact (Google)";
+    btnCall.textContent = getHomeI18n().callBtnGoogle;
     btnCall.onclick = () => window.open(mapsSearchUrl(item), "_blank", "noopener");
   }
 
@@ -1965,6 +2007,7 @@ function setLanguage(lang) {
     btn.classList.toggle("active", btn.dataset.lang === lang)
   );
   atualizarTextosEstaticos();
+  try{ applyHomeSectionsI18n(); }catch{}
   renderAtual();
 try{ toggleEventsCalendar(false); }catch{}
 }
@@ -2214,6 +2257,363 @@ try{ toggleEventsCalendar(false); }catch{}
 })();
 
 
+
+/* ==============================
+   I18N DAS SECÇÕES FIXAS DA HOME
+   (Meteorologia / Informação da Casa / Emergências / Praticidades)
+============================== */
+
+const HOME_I18N = {
+  pt: {
+    meteoTitle: "🌤️ Meteorologia · Peniche & Baleal",
+    todayTitle: "Hoje",
+    tomorrowTitle: "Amanhã",
+    surfTitle: "🌊 Mar & Surf",
+
+    houseTitle: "🏠 Informação da Casa",
+    wifiTitle: "📶 WiFi",
+    wifiPasswordLabel: "Password:",
+    wifiCopyBtn: "📋 Copiar",
+    wifiCopied: "✅ Copiado!",
+    checkinTitle: "🔑 Check-in / Check-out",
+    checkinSub: "Entrega das chaves em mão — o horário é combinado convosco antes da chegada.",
+    rulesTitle: "📋 Regras da casa",
+    rules: [
+      "🔇 Silêncio das 23h às 7h (período de descanso previsto na lei portuguesa)",
+      "🚭 Não é permitido fumar dentro de casa",
+      "🐾 Animais de estimação só mediante autorização prévia — fala connosco antes de reservar",
+      "🗑️ Lixo: coloca no contentor verde do parque de estacionamento, junto ao prédio",
+      "♻️ Reciclagem: ecoponto (papel/plástico/vidro) no início da rua, junto ao edifício \"Shark's\""
+    ],
+
+    sosTitle: "🚨 Emergências & Saúde",
+    sosEmergencyTitle: "Emergência nacional",
+    sosPharmacyTitle: "Farmácia de serviço hoje",
+    sosPharmacyMain: "💊 Ver farmácia",
+    sosPoliceTitle: "PSP Peniche (não urgente)",
+    sosNote: "Em caso de emergência, liga sempre primeiro para o 112.",
+
+    practicalTitle: "🚗 Praticidades do dia a dia",
+    parkingTitle: "🅿️ Estacionamento",
+    parkingMain: "Grátis, mesmo à porta",
+    parkingSub: "O parque junto ao prédio é gratuito e sem restrições — podes deixar lá o carro durante toda a estadia.",
+    transportTitle: "🚕 Transportes, táxi & Uber",
+    transportMain: "Uber e Bolt funcionam, mas com menos carros",
+    transportSub: "Peniche não tem uma rede de transportes públicos muito forte, por isso ter carro é o mais prático. Uber e Bolt existem na zona, mas com menos motoristas do que em Lisboa — a espera pode ser maior. Preferes táxi? Liga para <a href=\"tel:262782687\">262 782 687</a> ou <a href=\"tel:917296771\">917 296 771</a>.",
+    atmTitle: "🏧 Onde levantar dinheiro",
+    atmMain: "Multibanco na Estrada do Baleal",
+    atmSub: "O mais perto de casa fica na Estrada do Baleal, em Casais do Baleal, a poucos minutos. Há mais opções no centro de Peniche. Quase todos os estabelecimentos aceitam cartão, por isso raramente precisas de dinheiro vivo.",
+
+    weekdays: ["Seg","Ter","Qua","Qui","Sex","Sáb","Dom"],
+
+    updated: "Atualizado",
+    unavailable: "Meteorologia indisponível",
+    loadingWeather: "A carregar meteorologia…",
+    loadingUpdated: "A carregar…",
+    waveHeight: "Altura",
+    wavePeriod: "Período",
+    waveDirection: "Direção",
+    waves: "Ondas",
+    windUpTo: "até",
+    surfGood: "🔥 Bom",
+    surfOk: "👍 Razoável",
+    surfWeak: "🙂 Fraco",
+    tapToSeeAll: (label) => `Tocar para ver todas as opções de ${label.toLowerCase()}.`,
+    vanBertoSuggestions: "Sugestões do VanBerto's",
+    tapForDetails: "Tocar para ver detalhes",
+    noResults: "Nenhum resultado para esta pesquisa.",
+    defaultHorario: "Confirmar no Google Maps",
+    defaultTipo: "Restaurante/Bar",
+    defaultReservas: "Opcional",
+    defaultTakeaway: "Depende do local",
+    callBtn: "📞 Ligar",
+    callBtnGoogle: "📞 Contacto (Google)",
+    weatherCodes: {
+      0:"☀️ Céu limpo", 1:"🌤️ Pouco nublado", 2:"⛅ Parcialmente nublado", 3:"☁️ Nublado",
+      45:"🌫️ Nevoeiro", 48:"🌫️ Nevoeiro", 51:"🌦️ Chuva fraca", 53:"🌦️ Chuva fraca", 55:"🌦️ Chuva fraca",
+      61:"🌦️ Chuva fraca", 63:"🌧️ Chuva", 65:"⛈️ Chuva forte", 71:"❄️ Neve fraca", 73:"❄️ Neve", 75:"❄️ Neve forte",
+      80:"🌦️ Aguaceiros", 81:"🌦️ Aguaceiros", 82:"🌧️ Aguaceiros fortes", 95:"⛈️ Trovoada", 96:"⛈️ Trovoada", 99:"⛈️ Trovoada"
+    }
+  },
+  en: {
+    meteoTitle: "🌤️ Weather · Peniche & Baleal",
+    todayTitle: "Today",
+    tomorrowTitle: "Tomorrow",
+    surfTitle: "🌊 Sea & Surf",
+
+    houseTitle: "🏠 House Information",
+    wifiTitle: "📶 WiFi",
+    wifiPasswordLabel: "Password:",
+    wifiCopyBtn: "📋 Copy",
+    wifiCopied: "✅ Copied!",
+    checkinTitle: "🔑 Check-in / Check-out",
+    checkinSub: "Keys handed over in person — the time is arranged with you before arrival.",
+    rulesTitle: "📋 House rules",
+    rules: [
+      "🔇 Quiet hours from 11pm to 7am (rest period required by Portuguese law)",
+      "🚭 No smoking inside the house",
+      "🐾 Pets only with prior authorisation — talk to us before booking",
+      "🗑️ Rubbish: use the green bin in the car park, next to the building",
+      "♻️ Recycling: recycling point (paper/plastic/glass) at the start of the street, next to the \"Shark's\" building"
+    ],
+
+    sosTitle: "🚨 Emergencies & Health",
+    sosEmergencyTitle: "National emergency",
+    sosPharmacyTitle: "Pharmacy on duty today",
+    sosPharmacyMain: "💊 View pharmacy",
+    sosPoliceTitle: "PSP Peniche (non-urgent)",
+    sosNote: "In an emergency, always call 112 first.",
+
+    practicalTitle: "🚗 Everyday practicalities",
+    parkingTitle: "🅿️ Parking",
+    parkingMain: "Free, right at the door",
+    parkingSub: "The car park next to the building is free and unrestricted — you can leave your car there for your whole stay.",
+    transportTitle: "🚕 Transport, taxi & Uber",
+    transportMain: "Uber and Bolt work, but with fewer cars",
+    transportSub: "Peniche doesn't have a very strong public transport network, so having a car is the most practical option. Uber and Bolt operate in the area, but with fewer drivers than in Lisbon — waiting times can be longer. Prefer a taxi? Call <a href=\"tel:262782687\">262 782 687</a> or <a href=\"tel:917296771\">917 296 771</a>.",
+    atmTitle: "🏧 Where to withdraw cash",
+    atmMain: "ATM on Estrada do Baleal",
+    atmSub: "The closest one to the house is on Estrada do Baleal, in Casais do Baleal, a few minutes away. There are more options in central Peniche. Almost every place accepts card, so you rarely need cash.",
+
+    weekdays: ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
+
+    updated: "Updated",
+    unavailable: "Weather unavailable",
+    loadingWeather: "Loading weather…",
+    loadingUpdated: "Loading…",
+    waveHeight: "Height",
+    wavePeriod: "Period",
+    waveDirection: "Direction",
+    waves: "Waves",
+    windUpTo: "up to",
+    surfGood: "🔥 Good",
+    surfOk: "👍 Fair",
+    surfWeak: "🙂 Weak",
+    tapToSeeAll: (label) => `Tap to see all ${label.toLowerCase()}.`,
+    vanBertoSuggestions: "VanBerto's suggestions",
+    tapForDetails: "Tap for details",
+    noResults: "No results for this search.",
+    defaultHorario: "Check on Google Maps",
+    defaultTipo: "Restaurant/Bar",
+    defaultReservas: "Optional",
+    defaultTakeaway: "Depends on venue",
+    callBtn: "📞 Call",
+    callBtnGoogle: "📞 Contact (Google)",
+    weatherCodes: {
+      0:"☀️ Clear sky", 1:"🌤️ Mostly clear", 2:"⛅ Partly cloudy", 3:"☁️ Cloudy",
+      45:"🌫️ Fog", 48:"🌫️ Fog", 51:"🌦️ Light drizzle", 53:"🌦️ Drizzle", 55:"🌦️ Dense drizzle",
+      61:"🌦️ Light rain", 63:"🌧️ Rain", 65:"⛈️ Heavy rain", 71:"❄️ Light snow", 73:"❄️ Snow", 75:"❄️ Heavy snow",
+      80:"🌦️ Showers", 81:"🌦️ Showers", 82:"🌧️ Heavy showers", 95:"⛈️ Thunderstorm", 96:"⛈️ Thunderstorm", 99:"⛈️ Thunderstorm"
+    }
+  },
+  es: {
+    meteoTitle: "🌤️ Meteorología · Peniche & Baleal",
+    todayTitle: "Hoy",
+    tomorrowTitle: "Mañana",
+    surfTitle: "🌊 Mar & Surf",
+
+    houseTitle: "🏠 Información de la casa",
+    wifiTitle: "📶 WiFi",
+    wifiPasswordLabel: "Contraseña:",
+    wifiCopyBtn: "📋 Copiar",
+    wifiCopied: "✅ ¡Copiado!",
+    checkinTitle: "🔑 Check-in / Check-out",
+    checkinSub: "Entrega de llaves en mano — la hora se acuerda contigo antes de la llegada.",
+    rulesTitle: "📋 Normas de la casa",
+    rules: [
+      "🔇 Silencio de 23h a 7h (periodo de descanso previsto por la ley portuguesa)",
+      "🚭 No se permite fumar dentro de la casa",
+      "🐾 Mascotas solo con autorización previa — habla con nosotros antes de reservar",
+      "🗑️ Basura: en el contenedor verde del parking, junto al edificio",
+      "♻️ Reciclaje: punto verde (papel/plástico/vidrio) al principio de la calle, junto al edificio \"Shark's\""
+    ],
+
+    sosTitle: "🚨 Emergencias & Salud",
+    sosEmergencyTitle: "Emergencia nacional",
+    sosPharmacyTitle: "Farmacia de guardia hoy",
+    sosPharmacyMain: "💊 Ver farmacia",
+    sosPoliceTitle: "PSP Peniche (no urgente)",
+    sosNote: "En caso de emergencia, llama siempre primero al 112.",
+
+    practicalTitle: "🚗 Cosas prácticas del día a día",
+    parkingTitle: "🅿️ Aparcamiento",
+    parkingMain: "Gratis, justo en la puerta",
+    parkingSub: "El aparcamiento junto al edificio es gratuito y sin restricciones — puedes dejar el coche allí durante toda tu estancia.",
+    transportTitle: "🚕 Transporte, taxi & Uber",
+    transportMain: "Uber y Bolt funcionan, pero con menos coches",
+    transportSub: "Peniche no tiene una red de transporte público muy fuerte, así que tener coche es lo más práctico. Uber y Bolt existen en la zona, pero con menos conductores que en Lisboa — la espera puede ser mayor. ¿Prefieres taxi? Llama al <a href=\"tel:262782687\">262 782 687</a> o al <a href=\"tel:917296771\">917 296 771</a>.",
+    atmTitle: "🏧 Dónde sacar dinero",
+    atmMain: "Cajero en la Estrada do Baleal",
+    atmSub: "El más cercano a la casa está en la Estrada do Baleal, en Casais do Baleal, a pocos minutos. Hay más opciones en el centro de Peniche. Casi todos los establecimientos aceptan tarjeta, así que raramente necesitas dinero en efectivo.",
+
+    weekdays: ["Lun","Mar","Mié","Jue","Vie","Sáb","Dom"],
+
+    updated: "Actualizado",
+    unavailable: "Meteorología no disponible",
+    loadingWeather: "Cargando meteorología…",
+    loadingUpdated: "Cargando…",
+    waveHeight: "Altura",
+    wavePeriod: "Período",
+    waveDirection: "Dirección",
+    waves: "Olas",
+    windUpTo: "hasta",
+    surfGood: "🔥 Bueno",
+    surfOk: "👍 Razonable",
+    surfWeak: "🙂 Flojo",
+    tapToSeeAll: (label) => `Toca para ver todas las opciones de ${label.toLowerCase()}.`,
+    vanBertoSuggestions: "Sugerencias de VanBerto's",
+    tapForDetails: "Toca para ver detalles",
+    noResults: "Sin resultados para esta búsqueda.",
+    defaultHorario: "Consultar en Google Maps",
+    defaultTipo: "Restaurante/Bar",
+    defaultReservas: "Opcional",
+    defaultTakeaway: "Depende del local",
+    callBtn: "📞 Llamar",
+    callBtnGoogle: "📞 Contacto (Google)",
+    weatherCodes: {
+      0:"☀️ Cielo despejado", 1:"🌤️ Poco nublado", 2:"⛅ Parcialmente nublado", 3:"☁️ Nublado",
+      45:"🌫️ Niebla", 48:"🌫️ Niebla", 51:"🌦️ Llovizna leve", 53:"🌦️ Llovizna", 55:"🌦️ Llovizna densa",
+      61:"🌦️ Lluvia leve", 63:"🌧️ Lluvia", 65:"⛈️ Lluvia fuerte", 71:"❄️ Nieve leve", 73:"❄️ Nieve", 75:"❄️ Nieve fuerte",
+      80:"🌦️ Chubascos", 81:"🌦️ Chubascos", 82:"🌧️ Chubascos fuertes", 95:"⛈️ Tormenta", 96:"⛈️ Tormenta", 99:"⛈️ Tormenta"
+    }
+  },
+  fr: {
+    meteoTitle: "🌤️ Météo · Peniche & Baleal",
+    todayTitle: "Aujourd'hui",
+    tomorrowTitle: "Demain",
+    surfTitle: "🌊 Mer & Surf",
+
+    houseTitle: "🏠 Informations sur la maison",
+    wifiTitle: "📶 WiFi",
+    wifiPasswordLabel: "Mot de passe :",
+    wifiCopyBtn: "📋 Copier",
+    wifiCopied: "✅ Copié !",
+    checkinTitle: "🔑 Arrivée / Départ",
+    checkinSub: "Remise des clés en main propre — l'heure est convenue avec vous avant l'arrivée.",
+    rulesTitle: "📋 Règlement de la maison",
+    rules: [
+      "🔇 Silence de 23h à 7h (période de repos prévue par la loi portugaise)",
+      "🚭 Il est interdit de fumer à l'intérieur de la maison",
+      "🐾 Animaux uniquement avec autorisation préalable — contacte-nous avant de réserver",
+      "🗑️ Déchets : à déposer dans le conteneur vert du parking, près du bâtiment",
+      "♻️ Recyclage : point de collecte (papier/plastique/verre) au début de la rue, près du bâtiment \"Shark's\""
+    ],
+
+    sosTitle: "🚨 Urgences & Santé",
+    sosEmergencyTitle: "Urgence nationale",
+    sosPharmacyTitle: "Pharmacie de garde aujourd'hui",
+    sosPharmacyMain: "💊 Voir la pharmacie",
+    sosPoliceTitle: "PSP Peniche (non urgent)",
+    sosNote: "En cas d'urgence, appelle toujours d'abord le 112.",
+
+    practicalTitle: "🚗 Pratique au quotidien",
+    parkingTitle: "🅿️ Stationnement",
+    parkingMain: "Gratuit, juste devant la porte",
+    parkingSub: "Le parking près du bâtiment est gratuit et sans restriction — tu peux y laisser la voiture pendant tout ton séjour.",
+    transportTitle: "🚕 Transports, taxi & Uber",
+    transportMain: "Uber et Bolt fonctionnent, mais avec moins de voitures",
+    transportSub: "Peniche n'a pas un réseau de transports publics très développé, donc avoir une voiture est le plus pratique. Uber et Bolt existent dans la région, mais avec moins de chauffeurs qu'à Lisbonne — l'attente peut être plus longue. Tu préfères un taxi ? Appelle le <a href=\"tel:262782687\">262 782 687</a> ou le <a href=\"tel:917296771\">917 296 771</a>.",
+    atmTitle: "🏧 Où retirer de l'argent",
+    atmMain: "Distributeur sur l'Estrada do Baleal",
+    atmSub: "Le plus proche de la maison se trouve sur l'Estrada do Baleal, à Casais do Baleal, à quelques minutes. Il y a plus d'options dans le centre de Peniche. Presque tous les établissements acceptent la carte, donc tu as rarement besoin d'argent liquide.",
+
+    weekdays: ["Lun","Mar","Mer","Jeu","Ven","Sam","Dim"],
+
+    updated: "Mis à jour",
+    unavailable: "Météo indisponible",
+    loadingWeather: "Chargement de la météo…",
+    loadingUpdated: "Chargement…",
+    waveHeight: "Hauteur",
+    wavePeriod: "Période",
+    waveDirection: "Direction",
+    waves: "Vagues",
+    windUpTo: "jusqu'à",
+    surfGood: "🔥 Bon",
+    surfOk: "👍 Correct",
+    surfWeak: "🙂 Faible",
+    tapToSeeAll: (label) => `Touche pour voir toutes les options de ${label.toLowerCase()}.`,
+    vanBertoSuggestions: "Suggestions de VanBerto's",
+    tapForDetails: "Touche pour voir les détails",
+    noResults: "Aucun résultat pour cette recherche.",
+    defaultHorario: "Vérifier sur Google Maps",
+    defaultTipo: "Restaurant/Bar",
+    defaultReservas: "Facultatif",
+    defaultTakeaway: "Selon l'établissement",
+    callBtn: "📞 Appeler",
+    callBtnGoogle: "📞 Contact (Google)",
+    weatherCodes: {
+      0:"☀️ Ciel dégagé", 1:"🌤️ Peu nuageux", 2:"⛅ Partiellement nuageux", 3:"☁️ Nuageux",
+      45:"🌫️ Brouillard", 48:"🌫️ Brouillard", 51:"🌦️ Bruine légère", 53:"🌦️ Bruine", 55:"🌦️ Bruine dense",
+      61:"🌦️ Pluie légère", 63:"🌧️ Pluie", 65:"⛈️ Pluie forte", 71:"❄️ Neige légère", 73:"❄️ Neige", 75:"❄️ Neige forte",
+      80:"🌦️ Averses", 81:"🌦️ Averses", 82:"🌧️ Fortes averses", 95:"⛈️ Orage", 96:"⛈️ Orage", 99:"⛈️ Orage"
+    }
+  }
+};
+
+function getHomeI18n(){
+  return HOME_I18N[currentLang] || HOME_I18N.en;
+}
+
+function applyHomeSectionsI18n(){
+  const T = getHomeI18n();
+  const setText = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+  const setHtml = (id, val) => { const el = document.getElementById(id); if (el) el.innerHTML = val; };
+
+  // Meteorologia
+  setText("i18n-meteo-title", T.meteoTitle);
+  setText("i18n-today-title", T.todayTitle);
+  setText("i18n-tomorrow-title", T.tomorrowTitle);
+  setText("i18n-surf-title", T.surfTitle);
+  const meteoUpdated = document.getElementById("home-meteo-updated");
+  if (meteoUpdated && (meteoUpdated.textContent.trim() === "" || meteoUpdated.dataset.state === "loading")) {
+    meteoUpdated.textContent = T.loadingUpdated;
+  }
+
+  // Informação da Casa
+  setText("i18n-house-title", T.houseTitle);
+  setText("i18n-wifi-title", T.wifiTitle);
+  setText("i18n-wifi-password-label", T.wifiPasswordLabel);
+  const wifiBtn = document.getElementById("wifi-copy-btn");
+  if (wifiBtn && !wifiBtn.dataset.justCopied) wifiBtn.textContent = T.wifiCopyBtn;
+  setText("i18n-checkin-title", T.checkinTitle);
+  setText("i18n-checkin-sub", T.checkinSub);
+  setText("i18n-rules-title", T.rulesTitle);
+  const rulesList = document.getElementById("i18n-rules-list");
+  if (rulesList) {
+    rulesList.innerHTML = T.rules.map(r => `<li>${r}</li>`).join("");
+  }
+
+  // Emergências & Saúde
+  setText("i18n-sos-title", T.sosTitle);
+  setText("i18n-sos-emergency-title", T.sosEmergencyTitle);
+  setText("i18n-sos-pharmacy-title", T.sosPharmacyTitle);
+  setText("i18n-sos-pharmacy-main", T.sosPharmacyMain);
+  setText("i18n-sos-police-title", T.sosPoliceTitle);
+  setText("i18n-sos-note", T.sosNote);
+
+  // Praticidades
+  setText("i18n-practical-title", T.practicalTitle);
+  setText("i18n-parking-title", T.parkingTitle);
+  setText("i18n-parking-main", T.parkingMain);
+  setText("i18n-parking-sub", T.parkingSub);
+  setText("i18n-transport-title", T.transportTitle);
+  setText("i18n-transport-main", T.transportMain);
+  setHtml("i18n-transport-sub", T.transportSub);
+  setText("i18n-atm-title", T.atmTitle);
+  setText("i18n-atm-main", T.atmMain);
+  setText("i18n-atm-sub", T.atmSub);
+
+  // Dias da semana do mini-calendário
+  const weekRow = document.getElementById("mini-cal-week");
+  if (weekRow) {
+    const spans = weekRow.querySelectorAll("span");
+    T.weekdays.forEach((d, i) => { if (spans[i]) spans[i].textContent = d; });
+  }
+}
+
+// Corre logo ao carregar, para garantir estado inicial coerente com o idioma
+try{ applyHomeSectionsI18n(); }catch{}
+
 // --------- INICIAL ---------
 loadFavoritos();
 setLanguage(loadLanguage());
@@ -2345,18 +2745,7 @@ if (btnEventos) {
 const meteoBox = document.getElementById("meteo-info");
 
 function weatherCodePT(code){
-  const map = {
-    0:"☀️ Céu limpo",
-    1:"🌤️ Pouco nublado",
-    2:"⛅ Parcialmente nublado",
-    3:"☁️ Nublado",
-    45:"🌫️ Nevoeiro",
-    61:"🌦️ Chuva fraca",
-    63:"🌧️ Chuva",
-    65:"⛈️ Chuva forte",
-    80:"🌦️ Aguaceiros",
-    95:"⛈️ Trovoada"
-  };
+  const map = getHomeI18n().weatherCodes || {};
   return map[code] || "—";
 }
 
@@ -2371,12 +2760,13 @@ async function carregarMeteo(){
     const data = await res.json();
     const c = data.current;
 
+    const Ti18n = getHomeI18n();
     meteoBox.innerHTML =
       `${c.temperature_2m}°C | 🌬️ ${c.wind_speed_10m} km/h | ${weatherCodePT(c.weather_code)}
-       <br><small>Atualizado ${c.time.split("T")[1].slice(0,5)}</small>`;
+       <br><small>${Ti18n.updated} ${c.time.split("T")[1].slice(0,5)}</small>`;
 
   }catch{
-    meteoBox.textContent = "Meteorologia indisponível";
+    meteoBox.textContent = getHomeI18n().unavailable;
   }
 }
 
@@ -2424,9 +2814,10 @@ function surfRating({ waveHeight, wavePeriod, windSpeed }){
   // - Melhor surf costuma ser: ondas >= 1.2m, período >= 10s, vento <= 20 km/h
   // - Moderado: ondas >= 0.8m e período >= 8s e vento <= 28 km/h
   // - Caso contrário: fraco/irregular
-  if (waveHeight >= 1.2 && wavePeriod >= 10 && windSpeed <= 20) return { label:"🔥 Bom", emoji:"🏄‍♂️" };
-  if (waveHeight >= 0.8 && wavePeriod >= 8 && windSpeed <= 28) return { label:"👍 Razoável", emoji:"🏄" };
-  return { label:"🙂 Fraco", emoji:"🌊" };
+  const T = getHomeI18n();
+  if (waveHeight >= 1.2 && wavePeriod >= 10 && windSpeed <= 20) return { label:T.surfGood, emoji:"🏄‍♂️" };
+  if (waveHeight >= 0.8 && wavePeriod >= 8 && windSpeed <= 28) return { label:T.surfOk, emoji:"🏄" };
+  return { label:T.surfWeak, emoji:"🌊" };
 }
 
 async function carregarHomeMeteoESurf(){
@@ -2473,11 +2864,12 @@ async function carregarHomeMeteoESurf(){
     const icToday = iconFromWeatherCode(today.code);
     const icTom = iconFromWeatherCode(tom.code);
 
+    const Ti18nA = getHomeI18n();
     elToday.textContent = `${icToday} ${today.tmin}°–${today.tmax}°`;
-    elTodayExtra.textContent = `🌅 ${today.sunrise ? today.sunrise.split("T")[1].slice(0,5) : "—"} · 🌇 ${today.sunset ? today.sunset.split("T")[1].slice(0,5) : "—"} · 🌬️ até ${today.windMax ?? "—"} km/h · 🌧️ ${today.rain ?? "—"} mm`;
+    elTodayExtra.textContent = `🌅 ${today.sunrise ? today.sunrise.split("T")[1].slice(0,5) : "—"} · 🌇 ${today.sunset ? today.sunset.split("T")[1].slice(0,5) : "—"} · 🌬️ ${Ti18nA.windUpTo} ${today.windMax ?? "—"} km/h · 🌧️ ${today.rain ?? "—"} mm`;
 
     elTom.textContent = `${icTom} ${tom.tmin}°–${tom.tmax}°`;
-    elTomExtra.textContent = `🌅 ${tom.sunrise ? tom.sunrise.split("T")[1].slice(0,5) : "—"} · 🌇 ${tom.sunset ? tom.sunset.split("T")[1].slice(0,5) : "—"} · 🌬️ até ${tom.windMax ?? "—"} km/h · 🌧️ ${tom.rain ?? "—"} mm`;
+    elTomExtra.textContent = `🌅 ${tom.sunrise ? tom.sunrise.split("T")[1].slice(0,5) : "—"} · 🌇 ${tom.sunset ? tom.sunset.split("T")[1].slice(0,5) : "—"} · 🌬️ ${Ti18nA.windUpTo} ${tom.windMax ?? "—"} km/h · 🌧️ ${tom.rain ?? "—"} mm`;
 
     // 2) Marine (ondas) — usa hora mais próxima
     const urlM = `https://marine-api.open-meteo.com/v1/marine?latitude=${HOME_LAT}&longitude=${HOME_LON}&hourly=wave_height,wave_period,wave_direction&timezone=Europe%2FLisbon&forecast_days=2`;
@@ -2508,15 +2900,16 @@ async function carregarHomeMeteoESurf(){
 
     const dirTxt = humanDirFromDegrees(waveD);
     elSurf.textContent = `${rating.emoji} ${rating.label}`;
-    elSurfExtra.textContent = `Altura ${waveH.toFixed(1)} m · Período ${waveP.toFixed(0)} s · Direção ${dirTxt || "—"}`;
+    elSurfExtra.textContent = `${Ti18nA.waveHeight} ${waveH.toFixed(1)} m · ${Ti18nA.wavePeriod} ${waveP.toFixed(0)} s · ${Ti18nA.waveDirection} ${dirTxt || "—"}`;
 
     // Atualizado
     const hh = pad2(now.getHours());
     const mm = pad2(now.getMinutes());
-    elUpdated.textContent = `Atualizado ${hh}:${mm}`;
+    elUpdated.textContent = `${Ti18nA.updated} ${hh}:${mm}`;
 
   }catch(e){
-    elUpdated.textContent = "Meteorologia indisponível";
+    const Ti18nErr = getHomeI18n();
+    elUpdated.textContent = Ti18nErr.unavailable;
     elToday.textContent = "—";
     elTom.textContent = "—";
     elSurf.textContent = "—";
@@ -2557,8 +2950,9 @@ async function carregarMeteoMarNoModal(){
     const waveP = Number(period[best] ?? 0);
 
     // acrescenta ao final do conteúdo do modal (sem “estragar” o que já lá está)
-    const extra = ` <br><small>🌊 Ondas ${waveH.toFixed(1)} m · ${waveP.toFixed(0)} s</small>`;
-    if (!meteoBox.innerHTML.includes("🌊 Ondas")) meteoBox.innerHTML += extra;
+    const Ti18nWaves = getHomeI18n().waves;
+    const extra = ` <br><small>🌊 ${Ti18nWaves} ${waveH.toFixed(1)} m · ${waveP.toFixed(0)} s</small>`;
+    if (!meteoBox.innerHTML.includes("🌊")) meteoBox.innerHTML += extra;
   }catch{}
 }
 
@@ -2888,3 +3282,4 @@ function buildInfoHtml(cat, item){
     }catch{}
   };
 })();
+
