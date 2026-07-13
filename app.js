@@ -53,6 +53,29 @@ if (directionsBtn){
   directionsBtn.href = houseDirectionsUrl();
 }
 
+// --------- WiFi: copiar password ---------
+const wifiCopyBtn = document.getElementById("wifi-copy-btn");
+const wifiPassEl = document.getElementById("wifi-pass");
+if (wifiCopyBtn && wifiPassEl){
+  wifiCopyBtn.addEventListener("click", async () => {
+    const pass = wifiPassEl.textContent.trim();
+    try {
+      await navigator.clipboard.writeText(pass);
+    } catch {
+      // fallback para browsers/contextos sem Clipboard API (ex: http sem https)
+      const tmp = document.createElement("textarea");
+      tmp.value = pass;
+      document.body.appendChild(tmp);
+      tmp.select();
+      try { document.execCommand("copy"); } catch {}
+      document.body.removeChild(tmp);
+    }
+    const original = wifiCopyBtn.textContent;
+    wifiCopyBtn.textContent = "✅ Copiado!";
+    setTimeout(() => { wifiCopyBtn.textContent = original; }, 1800);
+  });
+}
+
 if (installBtn){
   installBtn.addEventListener("click", async () => {
     if (!deferredInstallPrompt) return;

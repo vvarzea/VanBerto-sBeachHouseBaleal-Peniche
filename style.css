@@ -1058,6 +1058,55 @@ button, .filter-btn, .lang-btn {
   text-align: center;
 }
 
+.home-house{
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
+.home-house-wifi-row{
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+#wifi-pass{
+  font-weight: 700;
+  color: #e2e8f0;
+  letter-spacing: 0.3px;
+}
+
+.home-house-copy-btn{
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  background: rgba(15, 23, 42, 0.6);
+  color: #e2e8f0;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.home-house-copy-btn:hover{
+  background: rgba(34, 197, 94, 0.25);
+}
+
+.home-house-copy-btn:active{
+  transform: scale(0.96);
+}
+
+.home-house-rules{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  color: #e2e8f0;
+  line-height: 1.4;
+}
+
 
 /* ===== MINI CALENDÁRIO ===== */
 .mini-cal{
