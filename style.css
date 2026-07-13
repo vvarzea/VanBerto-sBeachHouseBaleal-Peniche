@@ -1017,6 +1017,39 @@ button, .filter-btn, .lang-btn {
   .home-meteo-grid{ grid-template-columns: 1fr; }
 }
 
+.home-sos{
+  border-color: rgba(239, 68, 68, 0.35);
+}
+
+.home-sos-card{
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.home-sos-card:hover,
+.home-sos-card:focus-visible{
+  transform: translateY(-2px);
+  border-color: rgba(239, 68, 68, 0.55);
+}
+
+.home-sos-card-emergency{
+  background: rgba(239, 68, 68, 0.18);
+  border-color: rgba(239, 68, 68, 0.5);
+}
+
+.home-sos-card-emergency .home-meteo-main{
+  color: #fecaca;
+}
+
+.home-sos-note{
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
 
 /* ===== MINI CALENDÁRIO ===== */
 .mini-cal{
@@ -1195,47 +1228,3 @@ button, .filter-btn, .lang-btn {
 
 /* ===== EVENTS CALENDAR SECTION ===== */
 #events-calendar-section{ margin-top: 6px; }
-
-/* ── Contactos de Emergência ── */
-.emergency-section {
-  background: linear-gradient(135deg, #2d0a0a, #420f0f);
-  border: 1px solid rgba(255,100,100,0.28);
-  border-radius: 16px;
-  padding: 14px 18px;
-  margin-bottom: 16px;
-}
-.emergency-section summary {
-  cursor: pointer;
-  font-weight: 700;
-  color: #fca5a5;
-  font-size: 0.9rem;
-  list-style: none;
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  user-select: none;
-}
-.emergency-section summary::-webkit-details-marker { display: none; }
-.emergency-section summary::after { content: '▸'; margin-left: auto; transition: transform 0.2s; }
-.emergency-section[open] summary::after { transform: rotate(90deg); }
-.emergency-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  margin-top: 12px;
-}
-@media (max-width: 480px) { .emergency-grid { grid-template-columns: 1fr; } }
-.emergency-item {
-  background: rgba(255,255,255,0.05);
-  border-radius: 10px;
-  padding: 10px 12px;
-  text-decoration: none;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  transition: background 0.2s;
-}
-.emergency-item:hover { background: rgba(255,255,255,0.10); }
-.e-label { font-size: 0.70rem; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.05em; }
-.e-name  { font-size: 0.85rem; font-weight: 600; color: #fca5a5; }
-.e-num   { font-size: 0.92rem; font-weight: 700; color: #fff; }
