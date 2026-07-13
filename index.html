@@ -191,6 +191,50 @@
       </div></div>
     </section>
 
+    <!-- 🌅 Antes de saíres (avaliação + checklist de saída) -->
+    <section id="home-checkout" class="home-meteo home-checkout is-collapsed" aria-label="Antes de saíres">
+      <div class="home-meteo-head" data-toggle-section="home-checkout">
+        <div class="home-meteo-head-left">
+          <button type="button" class="home-meteo-toggle" aria-expanded="false" aria-controls="home-checkout-body">▾</button>
+          <div class="home-meteo-title" id="i18n-checkout-title">🌅 Antes de saíres</div>
+        </div>
+      </div>
+
+      <div class="home-meteo-body" id="home-checkout-body"><div class="home-meteo-body-inner">
+      <div class="home-meteo-grid">
+
+        <div class="home-meteo-card home-meteo-card-wide home-house-card">
+          <div class="home-meteo-card-title" id="i18n-rating-title">⭐ Avaliar a estadia</div>
+          <div class="home-meteo-sub" id="i18n-rating-prompt">Como foi a tua estadia? A tua opinião ajuda-nos a melhorar.</div>
+
+          <div class="checkout-stars" id="checkout-stars" role="radiogroup" aria-label="Classificação da estadia">
+            <button type="button" class="checkout-star" data-value="1" aria-label="1 estrela">☆</button>
+            <button type="button" class="checkout-star" data-value="2" aria-label="2 estrelas">☆</button>
+            <button type="button" class="checkout-star" data-value="3" aria-label="3 estrelas">☆</button>
+            <button type="button" class="checkout-star" data-value="4" aria-label="4 estrelas">☆</button>
+            <button type="button" class="checkout-star" data-value="5" aria-label="5 estrelas">☆</button>
+          </div>
+
+          <textarea id="checkout-comment" class="checkout-textarea" rows="2" maxlength="500" placeholder="Comentário opcional…"></textarea>
+
+          <button type="button" id="checkout-send-btn" class="primary-btn checkout-send-btn" disabled>
+            💬 Enviar avaliação
+          </button>
+        </div>
+
+        <div class="home-meteo-card home-meteo-card-wide home-house-card">
+          <div class="home-meteo-card-title" id="i18n-checklist-title">✅ Checklist de saída</div>
+          <ul class="checkout-checklist" id="checkout-checklist"></ul>
+          <div class="checkout-checklist-footer">
+            <div class="checkout-checklist-progress" id="checkout-checklist-progress">0/3</div>
+            <button type="button" id="checkout-checklist-reset" class="checkout-reset-btn" hidden>🔄 Repor</button>
+          </div>
+        </div>
+
+      </div>
+      </div></div>
+    </section>
+
 <!-- Barra de pesquisa -->
     <section class="search-row">
       <input

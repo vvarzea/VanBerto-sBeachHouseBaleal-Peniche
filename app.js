@@ -2260,6 +2260,106 @@ try{ toggleEventsCalendar(false); }catch{}
 
 
 /* ==============================
+   ANTES DE SAÍRES: avaliação por estrelas + checklist de saída
+============================== */
+const LS_KEY_CHECKOUT_CHECKLIST = "vb_checkout_checklist_v1";
+const OWNER_WHATSAPP = "+351966944973";
+let checkoutRating = 0;
+
+function loadChecklistState(){
+  try {
+    const raw = localStorage.getItem(LS_KEY_CHECKOUT_CHECKLIST);
+    return raw ? (JSON.parse(raw) || {}) : {};
+  } catch { return {}; }
+}
+
+function saveChecklistState(state){
+  try { localStorage.setItem(LS_KEY_CHECKOUT_CHECKLIST, JSON.stringify(state)); } catch {}
+}
+
+function renderCheckoutChecklist(){
+  const list = document.getElementById("checkout-checklist");
+  const progressEl = document.getElementById("checkout-checklist-progress");
+  const resetBtn = document.getElementById("checkout-checklist-reset");
+  if (!list) return;
+
+  const T = getHomeI18n();
+  const state = loadChecklistState();
+
+  list.innerHTML = T.checklist.map(item => `
+    <li>
+      <label>
+        <input type="checkbox" data-key="${item.key}" ${state[item.key] ? "checked" : ""} />
+        <span>${item.label}</span>
+      </label>
+    </li>
+  `).join("");
+
+  const done = T.checklist.filter(item => state[item.key]).length;
+  if (progressEl) progressEl.textContent = T.checklistProgress(done, T.checklist.length);
+  if (resetBtn) resetBtn.hidden = done === 0;
+
+  list.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+    cb.addEventListener("change", () => {
+      const s = loadChecklistState();
+      s[cb.dataset.key] = cb.checked;
+      saveChecklistState(s);
+      renderCheckoutChecklist();
+    });
+  });
+}
+
+(function initCheckoutSection(){
+  const starsWrap = document.getElementById("checkout-stars");
+  const sendBtn = document.getElementById("checkout-send-btn");
+  const commentEl = document.getElementById("checkout-comment");
+  const resetBtn = document.getElementById("checkout-checklist-reset");
+
+  if (starsWrap){
+    const stars = Array.from(starsWrap.querySelectorAll(".checkout-star"));
+
+    function paintStars(value){
+      stars.forEach(s => {
+        const v = Number(s.dataset.value);
+        s.classList.toggle("is-active", v <= value);
+        s.textContent = v <= value ? "★" : "☆";
+      });
+      if (sendBtn) sendBtn.disabled = value < 1;
+    }
+
+    stars.forEach(s => {
+      s.addEventListener("click", () => {
+        checkoutRating = Number(s.dataset.value);
+        paintStars(checkoutRating);
+      });
+    });
+  }
+
+  if (sendBtn){
+    sendBtn.addEventListener("click", () => {
+      if (checkoutRating < 1) return;
+      const T = getHomeI18n();
+      const comment = commentEl ? commentEl.value.trim() : "";
+      const msg = T.ratingWaMessage(checkoutRating, comment);
+      const digits = OWNER_WHATSAPP.replace(/[^\d]/g, "");
+      const url = "https://wa.me/" + digits + "?text=" + encodeURIComponent(msg);
+      window.open(url, "_blank", "noopener,noreferrer");
+    });
+  }
+
+  if (resetBtn){
+    resetBtn.addEventListener("click", () => {
+      saveChecklistState({});
+      renderCheckoutChecklist();
+    });
+  }
+
+  // A primeira renderização do checklist acontece via applyHomeSectionsI18n()
+  // (chamado mais abaixo, já com HOME_I18N disponível) e sempre que a língua muda.
+})();
+
+
+/* ==============================
    I18N DAS SECÇÕES FIXAS DA HOME
    (Meteorologia / Informação da Casa / Emergências / Praticidades)
 ============================== */
@@ -2304,6 +2404,23 @@ const HOME_I18N = {
     atmTitle: "🏧 Onde levantar dinheiro",
     atmMain: "Multibanco na Estrada do Baleal",
     atmSub: "O mais perto de casa fica na Estrada do Baleal, em Casais do Baleal, a poucos minutos. Há mais opções no centro de Peniche. Quase todos os estabelecimentos aceitam cartão, por isso raramente precisas de dinheiro vivo.",
+
+    checkoutTitle: "🌅 Antes de saíres",
+    ratingTitle: "⭐ Avaliar a estadia",
+    ratingPrompt: "Como foi a tua estadia? A tua opinião ajuda-nos a melhorar.",
+    ratingPlaceholder: "Comentário opcional… (fica entre nós)",
+    ratingSendBtn: "💬 Enviar avaliação",
+    ratingWaMessage: (stars, comment) =>
+      `Olá Vanda e Berto! 🙌\nAcabámos a nossa estadia no VanBerto's Beach House e queríamos deixar uma avaliação:\n\n${"⭐".repeat(stars)} (${stars}/5)` +
+      (comment ? `\n\n💬 ${comment}` : ""),
+    checklistTitle: "✅ Checklist de saída",
+    checklist: [
+      { key: "luzes", label: "💡 Luzes apagadas" },
+      { key: "lixo", label: "🗑️ Lixo despejado no contentor" },
+      { key: "chave", label: "🔑 Chave no local combinado" }
+    ],
+    checklistProgress: (done, total) => `${done}/${total} concluído${done === total ? " 🎉" : ""}`,
+    checklistReset: "🔄 Repor",
 
     weekdays: ["Seg","Ter","Qua","Qui","Sex","Sáb","Dom"],
 
@@ -2376,6 +2493,23 @@ const HOME_I18N = {
     atmMain: "ATM on Estrada do Baleal",
     atmSub: "The closest one to the house is on Estrada do Baleal, in Casais do Baleal, a few minutes away. There are more options in central Peniche. Almost every place accepts card, so you rarely need cash.",
 
+    checkoutTitle: "🌅 Before you leave",
+    ratingTitle: "⭐ Rate your stay",
+    ratingPrompt: "How was your stay? Your feedback helps us improve.",
+    ratingPlaceholder: "Optional comment… (just between us)",
+    ratingSendBtn: "💬 Send review",
+    ratingWaMessage: (stars, comment) =>
+      `Hi Vanda and Berto! 🙌\nWe just finished our stay at VanBerto's Beach House and wanted to leave a review:\n\n${"⭐".repeat(stars)} (${stars}/5)` +
+      (comment ? `\n\n💬 ${comment}` : ""),
+    checklistTitle: "✅ Departure checklist",
+    checklist: [
+      { key: "luzes", label: "💡 Lights off" },
+      { key: "lixo", label: "🗑️ Rubbish taken to the bin" },
+      { key: "chave", label: "🔑 Key left in the agreed spot" }
+    ],
+    checklistProgress: (done, total) => `${done}/${total} done${done === total ? " 🎉" : ""}`,
+    checklistReset: "🔄 Reset",
+
     weekdays: ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
 
     updated: "Updated",
@@ -2447,6 +2581,23 @@ const HOME_I18N = {
     atmMain: "Cajero en la Estrada do Baleal",
     atmSub: "El más cercano a la casa está en la Estrada do Baleal, en Casais do Baleal, a pocos minutos. Hay más opciones en el centro de Peniche. Casi todos los establecimientos aceptan tarjeta, así que raramente necesitas dinero en efectivo.",
 
+    checkoutTitle: "🌅 Antes de irte",
+    ratingTitle: "⭐ Valorar la estancia",
+    ratingPrompt: "¿Qué tal la estancia? Tu opinión nos ayuda a mejorar.",
+    ratingPlaceholder: "Comentario opcional… (queda entre nosotros)",
+    ratingSendBtn: "💬 Enviar valoración",
+    ratingWaMessage: (stars, comment) =>
+      `¡Hola Vanda y Berto! 🙌\nAcabamos nuestra estancia en VanBerto's Beach House y queríamos dejar una valoración:\n\n${"⭐".repeat(stars)} (${stars}/5)` +
+      (comment ? `\n\n💬 ${comment}` : ""),
+    checklistTitle: "✅ Checklist de salida",
+    checklist: [
+      { key: "luzes", label: "💡 Luces apagadas" },
+      { key: "lixo", label: "🗑️ Basura en el contenedor" },
+      { key: "chave", label: "🔑 Llave en el lugar acordado" }
+    ],
+    checklistProgress: (done, total) => `${done}/${total} completado${done === total ? " 🎉" : ""}`,
+    checklistReset: "🔄 Reiniciar",
+
     weekdays: ["Lun","Mar","Mié","Jue","Vie","Sáb","Dom"],
 
     updated: "Actualizado",
@@ -2517,6 +2668,23 @@ const HOME_I18N = {
     atmTitle: "🏧 Où retirer de l'argent",
     atmMain: "Distributeur sur l'Estrada do Baleal",
     atmSub: "Le plus proche de la maison se trouve sur l'Estrada do Baleal, à Casais do Baleal, à quelques minutes. Il y a plus d'options dans le centre de Peniche. Presque tous les établissements acceptent la carte, donc tu as rarement besoin d'argent liquide.",
+
+    checkoutTitle: "🌅 Avant de partir",
+    ratingTitle: "⭐ Évaluer le séjour",
+    ratingPrompt: "Comment s'est passé ton séjour ? Ton avis nous aide à nous améliorer.",
+    ratingPlaceholder: "Commentaire facultatif… (juste entre nous)",
+    ratingSendBtn: "💬 Envoyer l'avis",
+    ratingWaMessage: (stars, comment) =>
+      `Salut Vanda et Berto ! 🙌\nNous venons de terminer notre séjour au VanBerto's Beach House et voulions laisser un avis :\n\n${"⭐".repeat(stars)} (${stars}/5)` +
+      (comment ? `\n\n💬 ${comment}` : ""),
+    checklistTitle: "✅ Checklist de départ",
+    checklist: [
+      { key: "luzes", label: "💡 Lumières éteintes" },
+      { key: "lixo", label: "🗑️ Poubelles sorties" },
+      { key: "chave", label: "🔑 Clé à l'endroit convenu" }
+    ],
+    checklistProgress: (done, total) => `${done}/${total} fait${done === total ? " 🎉" : ""}`,
+    checklistReset: "🔄 Réinitialiser",
 
     weekdays: ["Lun","Mar","Mer","Jeu","Ven","Sam","Dim"],
 
@@ -2603,6 +2771,19 @@ function applyHomeSectionsI18n(){
   setText("i18n-atm-title", T.atmTitle);
   setText("i18n-atm-main", T.atmMain);
   setText("i18n-atm-sub", T.atmSub);
+
+  // Antes de saíres (avaliação + checklist)
+  setText("i18n-checkout-title", T.checkoutTitle);
+  setText("i18n-rating-title", T.ratingTitle);
+  setText("i18n-rating-prompt", T.ratingPrompt);
+  const checkoutComment = document.getElementById("checkout-comment");
+  if (checkoutComment) checkoutComment.placeholder = T.ratingPlaceholder;
+  const checkoutSendBtn = document.getElementById("checkout-send-btn");
+  if (checkoutSendBtn) checkoutSendBtn.textContent = T.ratingSendBtn;
+  setText("i18n-checklist-title", T.checklistTitle);
+  const checklistResetBtn = document.getElementById("checkout-checklist-reset");
+  if (checklistResetBtn) checklistResetBtn.textContent = T.checklistReset;
+  try { renderCheckoutChecklist(); } catch {}
 
   // Dias da semana do mini-calendário
   const weekRow = document.getElementById("mini-cal-week");
