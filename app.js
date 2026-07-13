@@ -19,6 +19,16 @@ function houseDirectionsUrl(){
     encodeURIComponent(HOUSE_LOCATION.lat + "," + HOUSE_LOCATION.lng);
 }
 
+// --------- CONTACTO DA CASA (fonte única do número) ---------
+const HOUSE_PHONE_INTL = "+351966944973";      // usar sempre este formato para tel:/wa.me
+const HOUSE_PHONE_DISPLAY = "966 944 973";     // formato legível para mostrar ao hóspede
+
+function houseWaLink(prefilledText){
+  const digits = HOUSE_PHONE_INTL.replace(/[^\d]/g, "");
+  const base = "https://wa.me/" + digits;
+  return prefilledText ? base + "?text=" + encodeURIComponent(prefilledText) : base;
+}
+
 // --------- ESTADO GLOBAL ---------
 let currentLang = "pt";
 let currentCategory = "tudo";
@@ -52,6 +62,13 @@ window.addEventListener("appinstalled", () => {
 if (directionsBtn){
   directionsBtn.href = houseDirectionsUrl();
 }
+
+// Contactos: href sempre gerado a partir de HOUSE_PHONE_INTL (fonte única)
+const contactBtnEl = document.getElementById("contact-btn");
+if (contactBtnEl) contactBtnEl.href = "tel:" + HOUSE_PHONE_INTL;
+
+const whatsappContactBtn = document.getElementById("whatsapp-contact-btn");
+if (whatsappContactBtn) whatsappContactBtn.href = houseWaLink();
 
 // --------- WiFi: copiar password ---------
 const wifiCopyBtn = document.getElementById("wifi-copy-btn");
@@ -1166,7 +1183,7 @@ function gerarCategoriasPrincipais() {
 
     const img = imgByCat[cat];
     card.innerHTML = `
-      <img class="card-img" src="${img}" alt="" loading="lazy" />
+      <img class="card-img" src="${img}" alt="${label}" loading="lazy" />
       <div class="card-header">
         <div class="card-title"><span class="card-ico">${icon}</span><span>${label}</span></div>
       </div>
@@ -1233,7 +1250,7 @@ function gerarCardsDeCategoria(cat) {
 
       const img = item.img || imgByCat[cat];
       card.innerHTML = `
-        <img class="card-img" src="${img}" alt="" loading="lazy" />
+        <img class="card-img" src="${img}" alt="${item.nome}" loading="lazy" />
         <div class="card-header">
           <div class="card-title"><span class="card-ico">${icon}</span><span>${item.nome}</span></div>
         </div>
@@ -1306,7 +1323,7 @@ function gerarFavoritos() {
 
       const img = item.img || imgByCat[cat];
       card.innerHTML = `
-        <img class="card-img" src="${img}" alt="" loading="lazy" />
+        <img class="card-img" src="${img}" alt="${item.nome}" loading="lazy" />
         <div class="card-header">
           <div class="card-title"><span class="card-ico">${icon}</span><span>${item.nome}</span></div>
         </div>
@@ -1777,9 +1794,11 @@ function atualizarFavToggle() {
 }
 
 function ativarTab(tabName) {
-  tabButtons.forEach(btn =>
-    btn.classList.toggle("active", btn.dataset.tab === tabName)
-  );
+  tabButtons.forEach(btn => {
+    const isActive = btn.dataset.tab === tabName;
+    btn.classList.toggle("active", isActive);
+    btn.setAttribute("aria-selected", isActive ? "true" : "false");
+  });
   tabPanels.forEach(panel =>
     panel.classList.toggle("active", panel.id === "panel-" + tabName)
   );
@@ -1809,7 +1828,7 @@ function atualizarTextosEstaticos() {
       btnMapAll: "🗺️ Ver todas as localizações no mapa",
       btnShareFavs: "🔗 Partilhar favoritos (QR)",
       searchPh: "🔍 Procurar por praia, restaurante, pizza, sushi...",
-      contact: "📱 966 944 973",
+      contact: "📱 " + HOUSE_PHONE_DISPLAY,
       directions: "📍 Como chegar à casa",
       footer1: "📍 VanBerto's Beach House · Baleal · Peniche",
       footer2: "🌊 Guia rápido para aproveitares o melhor da tua estadia",
@@ -1847,7 +1866,7 @@ function atualizarTextosEstaticos() {
       btnMapAll: "🗺️ View all locations on the map",
       btnShareFavs: "🔗 Share favourites (QR)",
       searchPh: "🔍 Search for beach, restaurant, pizza, sushi...",
-      contact: "📱 966 944 973",
+      contact: "📱 " + HOUSE_PHONE_DISPLAY,
       directions: "📍 Get directions to the house",
       footer1: "📍 VanBerto's Beach House · Baleal · Peniche",
       footer2: "🌊 Quick guide to enjoy the best of your stay",
@@ -1885,7 +1904,7 @@ function atualizarTextosEstaticos() {
       btnMapAll: "🗺️ Ver todas las ubicaciones en el mapa",
       btnShareFavs: "🔗 Compartir favoritos (QR)",
       searchPh: "🔍 Buscar playa, restaurante, pizza, sushi...",
-      contact: "📱 966 944 973",
+      contact: "📱 " + HOUSE_PHONE_DISPLAY,
       directions: "📍 Cómo llegar a la casa",
       footer1: "📍 VanBerto's Beach House · Baleal · Peniche",
       footer2: "🌊 Guía rápida para disfrutar tu estancia",
@@ -1923,7 +1942,7 @@ function atualizarTextosEstaticos() {
       btnMapAll: "🗺️ Voir toutes les localisations sur la carte",
       btnShareFavs: "🔗 Partager les favoris (QR)",
       searchPh: "🔍 Chercher plage, restaurant, pizza, sushi...",
-      contact: "📱 966 944 973",
+      contact: "📱 " + HOUSE_PHONE_DISPLAY,
       directions: "📍 Comment venir à la maison",
       footer1: "📍 VanBerto's Beach House · Baleal · Peniche",
       footer2: "🌊 Guide rapide pour profiter de ton séjour",
@@ -2035,8 +2054,9 @@ function abrirTodasNoMapa() {
 // --------- EVENTOS ---------
 filterButtons.forEach(btn => {
   btn.addEventListener("click", () => {
-    filterButtons.forEach(b => b.classList.remove("active"));
+    filterButtons.forEach(b => { b.classList.remove("active"); b.setAttribute("aria-pressed", "false"); });
     btn.classList.add("active");
+    btn.setAttribute("aria-pressed", "true");
     currentCategory = btn.dataset.category;
     renderAtual();
 try{ toggleEventsCalendar(false); }catch{}
@@ -2049,10 +2069,14 @@ langButtons.forEach(btn => {
   });
 });
 
+let searchDebounceTimer = null;
 searchInput.addEventListener("input", () => {
-  searchTerm = searchInput.value;
-  renderAtual();
+  clearTimeout(searchDebounceTimer);
+  searchDebounceTimer = setTimeout(() => {
+    searchTerm = searchInput.value;
+    renderAtual();
 try{ toggleEventsCalendar(false); }catch{}
+  }, 200);
 });
 
 document
@@ -2263,7 +2287,11 @@ try{ toggleEventsCalendar(false); }catch{}
    ANTES DE SAÍRES: avaliação por estrelas + checklist de saída
 ============================== */
 const LS_KEY_CHECKOUT_CHECKLIST = "vb_checkout_checklist_v1";
-const OWNER_WHATSAPP = "+351966944973";
+
+// Cola aqui o link "Escrever uma avaliação" da ficha do Google Business do VanBerto's.
+// Enquanto ficar vazio, o botão de avaliação no Google não aparece.
+const GOOGLE_REVIEW_URL = "";
+
 let checkoutRating = 0;
 
 function loadChecklistState(){
@@ -2281,6 +2309,7 @@ function renderCheckoutChecklist(){
   const list = document.getElementById("checkout-checklist");
   const progressEl = document.getElementById("checkout-checklist-progress");
   const resetBtn = document.getElementById("checkout-checklist-reset");
+  const nudgeEl = document.getElementById("checkout-checklist-nudge");
   if (!list) return;
 
   const T = getHomeI18n();
@@ -2299,6 +2328,13 @@ function renderCheckoutChecklist(){
   if (progressEl) progressEl.textContent = T.checklistProgress(done, T.checklist.length);
   if (resetBtn) resetBtn.hidden = done === 0;
 
+  // Convite gentil a avaliar assim que a checklist fica completa (só se ainda não avaliou nesta visita)
+  if (nudgeEl){
+    const showNudge = done === T.checklist.length && checkoutRating < 1;
+    nudgeEl.hidden = !showNudge;
+    if (showNudge) nudgeEl.textContent = T.checklistAllDoneNudge;
+  }
+
   list.querySelectorAll('input[type="checkbox"]').forEach(cb => {
     cb.addEventListener("change", () => {
       const s = loadChecklistState();
@@ -2314,6 +2350,7 @@ function renderCheckoutChecklist(){
   const sendBtn = document.getElementById("checkout-send-btn");
   const commentEl = document.getElementById("checkout-comment");
   const resetBtn = document.getElementById("checkout-checklist-reset");
+  const googleBtn = document.getElementById("checkout-google-btn");
 
   if (starsWrap){
     const stars = Array.from(starsWrap.querySelectorAll(".checkout-star"));
@@ -2331,6 +2368,7 @@ function renderCheckoutChecklist(){
       s.addEventListener("click", () => {
         checkoutRating = Number(s.dataset.value);
         paintStars(checkoutRating);
+        renderCheckoutChecklist(); // esconde o nudge assim que já avaliou
       });
     });
   }
@@ -2341,9 +2379,20 @@ function renderCheckoutChecklist(){
       const T = getHomeI18n();
       const comment = commentEl ? commentEl.value.trim() : "";
       const msg = T.ratingWaMessage(checkoutRating, comment);
-      const digits = OWNER_WHATSAPP.replace(/[^\d]/g, "");
-      const url = "https://wa.me/" + digits + "?text=" + encodeURIComponent(msg);
-      window.open(url, "_blank", "noopener,noreferrer");
+      window.open(houseWaLink(msg), "_blank", "noopener,noreferrer");
+
+      // Só sugere o Google depois de enviar, e só para avaliações de 4-5 estrelas
+      if (googleBtn && GOOGLE_REVIEW_URL && checkoutRating >= 4){
+        googleBtn.hidden = false;
+        googleBtn.textContent = getHomeI18n().googleReviewBtn;
+      }
+    });
+  }
+
+  if (googleBtn){
+    googleBtn.addEventListener("click", () => {
+      if (!GOOGLE_REVIEW_URL) return;
+      window.open(GOOGLE_REVIEW_URL, "_blank", "noopener,noreferrer");
     });
   }
 
@@ -2421,11 +2470,17 @@ const HOME_I18N = {
     ],
     checklistProgress: (done, total) => `${done}/${total} concluído${done === total ? " 🎉" : ""}`,
     checklistReset: "🔄 Repor",
+    checklistAllDoneNudge: "✅ Tudo pronto! Já agora, que tal deixares a tua avaliação? ⭐",
+    googleReviewBtn: "⭐ Deixar também no Google",
 
     weekdays: ["Seg","Ter","Qua","Qui","Sex","Sáb","Dom"],
 
     updated: "Atualizado",
     unavailable: "Meteorologia indisponível",
+    offlineData: "Dados guardados",
+    justNow: "agora mesmo",
+    minutesAgo: (n) => `há ${n} min`,
+    hoursAgo: (n) => `há ${n}h`,
     loadingWeather: "A carregar meteorologia…",
     loadingUpdated: "A carregar…",
     waveHeight: "Altura",
@@ -2509,11 +2564,17 @@ const HOME_I18N = {
     ],
     checklistProgress: (done, total) => `${done}/${total} done${done === total ? " 🎉" : ""}`,
     checklistReset: "🔄 Reset",
+    checklistAllDoneNudge: "✅ All set! While you're at it, why not leave a review? ⭐",
+    googleReviewBtn: "⭐ Also leave it on Google",
 
     weekdays: ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
 
     updated: "Updated",
     unavailable: "Weather unavailable",
+    offlineData: "Saved data",
+    justNow: "just now",
+    minutesAgo: (n) => `${n} min ago`,
+    hoursAgo: (n) => `${n}h ago`,
     loadingWeather: "Loading weather…",
     loadingUpdated: "Loading…",
     waveHeight: "Height",
@@ -2597,11 +2658,17 @@ const HOME_I18N = {
     ],
     checklistProgress: (done, total) => `${done}/${total} completado${done === total ? " 🎉" : ""}`,
     checklistReset: "🔄 Reiniciar",
+    checklistAllDoneNudge: "✅ ¡Todo listo! Ya que estás, ¿qué tal dejar tu valoración? ⭐",
+    googleReviewBtn: "⭐ Dejarla también en Google",
 
     weekdays: ["Lun","Mar","Mié","Jue","Vie","Sáb","Dom"],
 
     updated: "Actualizado",
     unavailable: "Meteorología no disponible",
+    offlineData: "Datos guardados",
+    justNow: "ahora mismo",
+    minutesAgo: (n) => `hace ${n} min`,
+    hoursAgo: (n) => `hace ${n}h`,
     loadingWeather: "Cargando meteorología…",
     loadingUpdated: "Cargando…",
     waveHeight: "Altura",
@@ -2685,11 +2752,17 @@ const HOME_I18N = {
     ],
     checklistProgress: (done, total) => `${done}/${total} fait${done === total ? " 🎉" : ""}`,
     checklistReset: "🔄 Réinitialiser",
+    checklistAllDoneNudge: "✅ Tout est prêt ! Pendant que tu y es, pourquoi ne pas laisser un avis ? ⭐",
+    googleReviewBtn: "⭐ Le laisser aussi sur Google",
 
     weekdays: ["Lun","Mar","Mer","Jeu","Ven","Sam","Dim"],
 
     updated: "Mis à jour",
     unavailable: "Météo indisponible",
+    offlineData: "Données enregistrées",
+    justNow: "à l'instant",
+    minutesAgo: (n) => `il y a ${n} min`,
+    hoursAgo: (n) => `il y a ${n}h`,
     loadingWeather: "Chargement de la météo…",
     loadingUpdated: "Chargement…",
     waveHeight: "Hauteur",
@@ -3002,7 +3075,31 @@ function surfRating({ waveHeight, wavePeriod, windSpeed }){
   return { label:T.surfWeak, emoji:"🌊" };
 }
 
-async function carregarHomeMeteoESurf(){
+const LS_KEY_METEO_CACHE = "vb_home_meteo_cache_v1";
+
+function saveMeteoCache(payload){
+  try {
+    localStorage.setItem(LS_KEY_METEO_CACHE, JSON.stringify({ ...payload, savedAt: Date.now() }));
+  } catch {}
+}
+
+function loadMeteoCache(){
+  try {
+    const raw = localStorage.getItem(LS_KEY_METEO_CACHE);
+    return raw ? JSON.parse(raw) : null;
+  } catch { return null; }
+}
+
+function relativeTimeLabel(savedAt){
+  const T = getHomeI18n();
+  const diffMin = Math.max(0, Math.round((Date.now() - savedAt) / 60000));
+  if (diffMin < 1) return T.justNow;
+  if (diffMin < 60) return T.minutesAgo(diffMin);
+  const diffH = Math.round(diffMin / 60);
+  return T.hoursAgo(diffH);
+}
+
+function renderHomeMeteoFromData({ today, tom, waveH, waveP, waveD }, { offline, savedAt } = {}){
   const elUpdated = document.getElementById("home-meteo-updated");
   const elToday = document.getElementById("home-meteo-today");
   const elTodayExtra = document.getElementById("home-meteo-today-extra");
@@ -3010,6 +3107,36 @@ async function carregarHomeMeteoESurf(){
   const elTomExtra = document.getElementById("home-meteo-tomorrow-extra");
   const elSurf = document.getElementById("home-surf");
   const elSurfExtra = document.getElementById("home-surf-extra");
+  if (!elUpdated || !elToday || !elTom || !elSurf) return;
+
+  const Ti18nA = getHomeI18n();
+  const icToday = iconFromWeatherCode(today.code);
+  const icTom = iconFromWeatherCode(tom.code);
+
+  elToday.textContent = `${icToday} ${today.tmin}°–${today.tmax}°`;
+  elTodayExtra.textContent = `🌅 ${today.sunrise ? today.sunrise.split("T")[1].slice(0,5) : "—"} · 🌇 ${today.sunset ? today.sunset.split("T")[1].slice(0,5) : "—"} · 🌬️ ${Ti18nA.windUpTo} ${today.windMax ?? "—"} km/h · 🌧️ ${today.rain ?? "—"} mm`;
+
+  elTom.textContent = `${icTom} ${tom.tmin}°–${tom.tmax}°`;
+  elTomExtra.textContent = `🌅 ${tom.sunrise ? tom.sunrise.split("T")[1].slice(0,5) : "—"} · 🌇 ${tom.sunset ? tom.sunset.split("T")[1].slice(0,5) : "—"} · 🌬️ ${Ti18nA.windUpTo} ${tom.windMax ?? "—"} km/h · 🌧️ ${tom.rain ?? "—"} mm`;
+
+  const rating = surfRating({ waveHeight: waveH, wavePeriod: waveP, windSpeed: Number(today.windMax ?? 0) });
+  const dirTxt = humanDirFromDegrees(waveD);
+  elSurf.textContent = `${rating.emoji} ${rating.label}`;
+  elSurfExtra.textContent = `${Ti18nA.waveHeight} ${waveH.toFixed(1)} m · ${Ti18nA.wavePeriod} ${waveP.toFixed(0)} s · ${Ti18nA.waveDirection} ${dirTxt || "—"}`;
+
+  if (offline){
+    elUpdated.textContent = `📴 ${Ti18nA.offlineData} · ${relativeTimeLabel(savedAt)}`;
+  } else {
+    const now = new Date();
+    elUpdated.textContent = `${Ti18nA.updated} ${pad2(now.getHours())}:${pad2(now.getMinutes())}`;
+  }
+}
+
+async function carregarHomeMeteoESurf(){
+  const elUpdated = document.getElementById("home-meteo-updated");
+  const elToday = document.getElementById("home-meteo-today");
+  const elTom = document.getElementById("home-meteo-tomorrow");
+  const elSurf = document.getElementById("home-surf");
 
   // Se a homepage não tiver o bloco, não faz nada
   if (!elUpdated || !elToday || !elTom || !elSurf) return;
@@ -3043,16 +3170,6 @@ async function carregarHomeMeteoESurf(){
       date: d.time?.[1]
     };
 
-    const icToday = iconFromWeatherCode(today.code);
-    const icTom = iconFromWeatherCode(tom.code);
-
-    const Ti18nA = getHomeI18n();
-    elToday.textContent = `${icToday} ${today.tmin}°–${today.tmax}°`;
-    elTodayExtra.textContent = `🌅 ${today.sunrise ? today.sunrise.split("T")[1].slice(0,5) : "—"} · 🌇 ${today.sunset ? today.sunset.split("T")[1].slice(0,5) : "—"} · 🌬️ ${Ti18nA.windUpTo} ${today.windMax ?? "—"} km/h · 🌧️ ${today.rain ?? "—"} mm`;
-
-    elTom.textContent = `${icTom} ${tom.tmin}°–${tom.tmax}°`;
-    elTomExtra.textContent = `🌅 ${tom.sunrise ? tom.sunrise.split("T")[1].slice(0,5) : "—"} · 🌇 ${tom.sunset ? tom.sunset.split("T")[1].slice(0,5) : "—"} · 🌬️ ${Ti18nA.windUpTo} ${tom.windMax ?? "—"} km/h · 🌧️ ${tom.rain ?? "—"} mm`;
-
     // 2) Marine (ondas) — usa hora mais próxima
     const urlM = `https://marine-api.open-meteo.com/v1/marine?latitude=${HOME_LAT}&longitude=${HOME_LON}&hourly=wave_height,wave_period,wave_direction&timezone=Europe%2FLisbon&forecast_days=2`;
     const resM = await fetch(urlM);
@@ -3078,23 +3195,21 @@ async function carregarHomeMeteoESurf(){
     const waveP = Number(period[best] ?? 0);
     const waveD = Number(wdir[best] ?? NaN);
 
-    const rating = surfRating({ waveHeight: waveH, wavePeriod: waveP, windSpeed: Number(today.windMax ?? 0) });
-
-    const dirTxt = humanDirFromDegrees(waveD);
-    elSurf.textContent = `${rating.emoji} ${rating.label}`;
-    elSurfExtra.textContent = `${Ti18nA.waveHeight} ${waveH.toFixed(1)} m · ${Ti18nA.wavePeriod} ${waveP.toFixed(0)} s · ${Ti18nA.waveDirection} ${dirTxt || "—"}`;
-
-    // Atualizado
-    const hh = pad2(now.getHours());
-    const mm = pad2(now.getMinutes());
-    elUpdated.textContent = `${Ti18nA.updated} ${hh}:${mm}`;
+    const payload = { today, tom, waveH, waveP, waveD };
+    renderHomeMeteoFromData(payload);
+    saveMeteoCache(payload);
 
   }catch(e){
-    const Ti18nErr = getHomeI18n();
-    elUpdated.textContent = Ti18nErr.unavailable;
-    elToday.textContent = "—";
-    elTom.textContent = "—";
-    elSurf.textContent = "—";
+    const cached = loadMeteoCache();
+    if (cached){
+      renderHomeMeteoFromData(cached, { offline: true, savedAt: cached.savedAt });
+    } else {
+      const Ti18nErr = getHomeI18n();
+      elUpdated.textContent = Ti18nErr.unavailable;
+      elToday.textContent = "—";
+      elTom.textContent = "—";
+      elSurf.textContent = "—";
+    }
   }
 }
 

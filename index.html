@@ -220,6 +220,9 @@
           <button type="button" id="checkout-send-btn" class="primary-btn checkout-send-btn" disabled>
             💬 Enviar avaliação
           </button>
+          <button type="button" id="checkout-google-btn" class="ghost-btn checkout-google-btn" hidden>
+            ⭐ Deixar também no Google
+          </button>
         </div>
 
         <div class="home-meteo-card home-meteo-card-wide home-house-card">
@@ -229,6 +232,7 @@
             <div class="checkout-checklist-progress" id="checkout-checklist-progress">0/3</div>
             <button type="button" id="checkout-checklist-reset" class="checkout-reset-btn" hidden>🔄 Repor</button>
           </div>
+          <div class="checkout-checklist-nudge" id="checkout-checklist-nudge" hidden></div>
         </div>
 
       </div>
@@ -247,17 +251,17 @@
 
     <!-- Filtros -->
     <section class="filters">
-      <button class="filter-btn active" data-category="tudo" id="btn-cat-main">Menus principais</button>
-      <button class="filter-btn" data-category="favoritos" id="btn-cat-favs">⭐ Favoritos</button>
-      <button class="filter-btn" data-category="Praias" id="btn-cat-praias">Praias</button>
-      <button class="filter-btn" data-category="Locais" id="btn-cat-locais">Locais de interesse</button>
-      <button class="filter-btn" data-category="Supermercados" id="btn-cat-super">Supermercados</button>
-      <button class="filter-btn" data-category="Farmacias" id="btn-cat-farm">Farmácias</button>
-      <button class="filter-btn" data-category="Restaurantes" id="btn-cat-rest">Restaurantes</button>
-      <button class="filter-btn" data-category="Churrasqueiras" id="btn-cat-churras">Churrasqueiras</button>
-      <button class="filter-btn" data-category="Bares" id="btn-cat-bares">Bares</button>
-      <button class="filter-btn" data-category="Eventos" id="btn-cat-eventos">📅 Eventos</button>
-      <button class="filter-btn" data-category="FastFood" id="btn-cat-fast">Fast-Food</button>
+      <button class="filter-btn active" data-category="tudo" id="btn-cat-main" aria-pressed="true">Menus principais</button>
+      <button class="filter-btn" data-category="favoritos" id="btn-cat-favs" aria-pressed="false">⭐ Favoritos</button>
+      <button class="filter-btn" data-category="Praias" id="btn-cat-praias" aria-pressed="false">Praias</button>
+      <button class="filter-btn" data-category="Locais" id="btn-cat-locais" aria-pressed="false">Locais de interesse</button>
+      <button class="filter-btn" data-category="Supermercados" id="btn-cat-super" aria-pressed="false">Supermercados</button>
+      <button class="filter-btn" data-category="Farmacias" id="btn-cat-farm" aria-pressed="false">Farmácias</button>
+      <button class="filter-btn" data-category="Restaurantes" id="btn-cat-rest" aria-pressed="false">Restaurantes</button>
+      <button class="filter-btn" data-category="Churrasqueiras" id="btn-cat-churras" aria-pressed="false">Churrasqueiras</button>
+      <button class="filter-btn" data-category="Bares" id="btn-cat-bares" aria-pressed="false">Bares</button>
+      <button class="filter-btn" data-category="Eventos" id="btn-cat-eventos" aria-pressed="false">📅 Eventos</button>
+      <button class="filter-btn" data-category="FastFood" id="btn-cat-fast" aria-pressed="false">Fast-Food</button>
     </section>
 
     <!-- Botão mapa geral -->
@@ -326,10 +330,10 @@
         </div>
       </div>
 
-      <div class="modal-tabs">
-        <button class="tab-btn active" data-tab="info" id="tab-info">ℹ️ Info</button>
-        <button class="tab-btn" data-tab="event" id="tab-event">📅 Evento</button>
-        <button class="tab-btn" data-tab="map" id="tab-map">🗺️ Mapa</button>
+      <div class="modal-tabs" role="tablist">
+        <button class="tab-btn active" data-tab="info" id="tab-info" role="tab" aria-selected="true">ℹ️ Info</button>
+        <button class="tab-btn" data-tab="event" id="tab-event" role="tab" aria-selected="false">📅 Evento</button>
+        <button class="tab-btn" data-tab="map" id="tab-map" role="tab" aria-selected="false">🗺️ Mapa</button>
       </div>
 
       <div class="modal-content">
@@ -412,7 +416,7 @@
     </a>
 
     <a href="https://wa.me/351966944973" target="_blank" rel="noopener noreferrer"
-       class="contact-btn"
+       class="contact-btn" id="whatsapp-contact-btn"
        style="background:linear-gradient(135deg,#25d366,#128c4e);color:#fff;">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.558 4.116 1.535 5.845L.057 23.454a.75.75 0 0 0 .918.918l5.65-1.48A11.94 11.94 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75a9.726 9.726 0 0 1-4.964-1.36l-.355-.212-3.683.965.981-3.586-.232-.368A9.726 9.726 0 0 1 2.25 12C2.25 6.615 6.615 2.25 12 2.25S21.75 6.615 21.75 12 17.385 21.75 12 21.75z"/></svg>
       WhatsApp
