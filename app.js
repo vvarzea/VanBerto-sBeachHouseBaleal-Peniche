@@ -59,6 +59,37 @@ window.addEventListener("appinstalled", () => {
   if (installBtn) installBtn.hidden = true;
 });
 
+// --------- INSTALAÇÃO NO IOS/SAFARI (não existe beforeinstallprompt) ---------
+const iosInstallBanner = document.getElementById("ios-install-banner");
+const iosInstallCloseBtn = document.getElementById("ios-install-close");
+const LS_KEY_IOS_BANNER_DISMISSED = "vb_ios_banner_dismissed_v1";
+
+function isIosDevice() {
+  const ua = navigator.userAgent || "";
+  return /iphone|ipad|ipod/i.test(ua) ||
+    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1); // iPadOS 13+
+}
+function isStandaloneDisplay() {
+  return (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) ||
+    navigator.standalone === true;
+}
+
+if (
+  iosInstallBanner &&
+  isIosDevice() &&
+  !isStandaloneDisplay() &&
+  localStorage.getItem(LS_KEY_IOS_BANNER_DISMISSED) !== "1"
+) {
+  iosInstallBanner.hidden = false;
+}
+
+if (iosInstallCloseBtn) {
+  iosInstallCloseBtn.addEventListener("click", () => {
+    if (iosInstallBanner) iosInstallBanner.hidden = true;
+    try { localStorage.setItem(LS_KEY_IOS_BANNER_DISMISSED, "1"); } catch {}
+  });
+}
+
 if (directionsBtn){
   directionsBtn.href = houseDirectionsUrl();
 }
@@ -129,6 +160,8 @@ const modalDetails = document.getElementById("modal-details");
 const modalMapText = document.getElementById("modal-map-text");
 const modalOpenMapsBtn = document.getElementById("modal-open-maps");
 const modalMapIframe = document.getElementById("modal-map-iframe");
+const mapOfflineMsg = document.getElementById("map-offline-msg");
+const mapOfflineBtn = document.getElementById("map-offline-btn");
 const favToggleBtn = document.getElementById("fav-toggle");
 const tabButtons = document.querySelectorAll(".tab-btn");
 const tabPanels = document.querySelectorAll(".tab-panel");
@@ -1728,9 +1761,11 @@ function abrirModal(cat, item) {
   const photo = item.img || item.imagem || (imgByCat && imgByCat[cat]) || "";
   if (modalPhoto && photo) {
     modalPhoto.src = photo;
+    modalPhoto.alt = item.nome || "";
     modalPhoto.hidden = false;
   } else if (modalPhoto) {
     modalPhoto.removeAttribute('src');
+    modalPhoto.alt = "";
     modalPhoto.hidden = true;
   }
 
@@ -1755,12 +1790,13 @@ function abrirModal(cat, item) {
   const mapMsg = modalMapText.dataset[currentLang] || modalMapText.dataset.en || "";
   modalMapText.textContent = mapMsg;
 
-  // Mini-mapa embutido (iframe)
+  // Mini-mapa embutido (iframe) — com aviso quando não há ligação à internet
   if (modalMapIframe) {
     const destino = item.mapa || item.nome;
     const embed = "https://www.google.com/maps?q=" + encodeURIComponent(destino) + "&output=embed";
     modalMapIframe.src = embed;
   }
+  atualizarEstadoMapaOffline();
 
   atualizarFavToggle();
   ativarTab("info");
@@ -1802,6 +1838,26 @@ function ativarTab(tabName) {
   tabPanels.forEach(panel =>
     panel.classList.toggle("active", panel.id === "panel-" + tabName)
   );
+  if (tabName === "map") atualizarEstadoMapaOffline();
+}
+
+// --------- MAPA: aviso quando não há ligação à internet ---------
+function atualizarEstadoMapaOffline() {
+  const offline = !navigator.onLine;
+  if (mapOfflineMsg) mapOfflineMsg.hidden = !offline;
+  if (modalMapIframe) modalMapIframe.style.visibility = offline ? "hidden" : "visible";
+}
+
+window.addEventListener("online", atualizarEstadoMapaOffline);
+window.addEventListener("offline", atualizarEstadoMapaOffline);
+
+if (mapOfflineBtn) {
+  mapOfflineBtn.addEventListener("click", () => {
+    if (!itemAtual) return;
+    const destino = itemAtual.mapa || itemAtual.nome;
+    window.location.href =
+      "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(destino);
+  });
 }
 
 // --------- LÍNGUA ---------
@@ -2473,6 +2529,11 @@ const HOME_I18N = {
     checklistAllDoneNudge: "✅ Tudo pronto! Já agora, que tal deixares a tua avaliação? ⭐",
     googleReviewBtn: "⭐ Deixar também no Google",
 
+    iosInstallMsg: 'Toca em <strong>Partilhar</strong> e depois em <strong>"Adicionar ao ecrã principal"</strong> para instalares esta app.',
+    updateBannerMsg: "Nova versão disponível — toca para atualizar",
+    mapOfflineMsg: "Precisas de ligação à internet para ver o mapa aqui.",
+    mapOfflineBtn: "📍 Abrir no Google Maps",
+
     weekdays: ["Seg","Ter","Qua","Qui","Sex","Sáb","Dom"],
 
     updated: "Atualizado",
@@ -2566,6 +2627,11 @@ const HOME_I18N = {
     checklistReset: "🔄 Reset",
     checklistAllDoneNudge: "✅ All set! While you're at it, why not leave a review? ⭐",
     googleReviewBtn: "⭐ Also leave it on Google",
+
+    iosInstallMsg: 'Tap <strong>Share</strong>, then <strong>"Add to Home Screen"</strong> to install this app.',
+    updateBannerMsg: "New version available — tap to update",
+    mapOfflineMsg: "You need an internet connection to see the map here.",
+    mapOfflineBtn: "📍 Open in Google Maps",
 
     weekdays: ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
 
@@ -2661,6 +2727,11 @@ const HOME_I18N = {
     checklistAllDoneNudge: "✅ ¡Todo listo! Ya que estás, ¿qué tal dejar tu valoración? ⭐",
     googleReviewBtn: "⭐ Dejarla también en Google",
 
+    iosInstallMsg: 'Toca en <strong>Compartir</strong> y luego en <strong>"Añadir a pantalla de inicio"</strong> para instalar esta app.',
+    updateBannerMsg: "Nueva versión disponible — toca para actualizar",
+    mapOfflineMsg: "Necesitas conexión a internet para ver el mapa aquí.",
+    mapOfflineBtn: "📍 Abrir en Google Maps",
+
     weekdays: ["Lun","Mar","Mié","Jue","Vie","Sáb","Dom"],
 
     updated: "Actualizado",
@@ -2754,6 +2825,11 @@ const HOME_I18N = {
     checklistReset: "🔄 Réinitialiser",
     checklistAllDoneNudge: "✅ Tout est prêt ! Pendant que tu y es, pourquoi ne pas laisser un avis ? ⭐",
     googleReviewBtn: "⭐ Le laisser aussi sur Google",
+
+    iosInstallMsg: 'Appuie sur <strong>Partager</strong>, puis sur <strong>« Sur l\'écran d\'accueil »</strong> pour installer cette app.',
+    updateBannerMsg: "Nouvelle version disponible — appuie pour mettre à jour",
+    mapOfflineMsg: "Une connexion internet est nécessaire pour voir la carte ici.",
+    mapOfflineBtn: "📍 Ouvrir dans Google Maps",
 
     weekdays: ["Lun","Mar","Mer","Jeu","Ven","Sam","Dim"],
 
@@ -2857,6 +2933,13 @@ function applyHomeSectionsI18n(){
   const checklistResetBtn = document.getElementById("checkout-checklist-reset");
   if (checklistResetBtn) checklistResetBtn.textContent = T.checklistReset;
   try { renderCheckoutChecklist(); } catch {}
+
+  // Banners (instalação iOS / nova versão) & mini-mapa offline
+  setHtml("ios-install-text", T.iosInstallMsg);
+  setText("update-banner-text", T.updateBannerMsg);
+  setText("map-offline-text", T.mapOfflineMsg);
+  const mapOfflineBtnEl = document.getElementById("map-offline-btn");
+  if (mapOfflineBtnEl) mapOfflineBtnEl.textContent = T.mapOfflineBtn;
 
   // Dias da semana do mini-calendário
   const weekRow = document.getElementById("mini-cal-week");

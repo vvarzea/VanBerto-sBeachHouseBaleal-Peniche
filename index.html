@@ -18,6 +18,21 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- 📲 Banner de instalação para iOS/Safari (sem beforeinstallprompt) -->
+  <div id="ios-install-banner" class="app-banner" hidden>
+    <span class="app-banner-icon">📲</span>
+    <span id="ios-install-text" class="app-banner-text">Toca em <strong>Partilhar</strong> e depois em <strong>"Adicionar ao ecrã principal"</strong> para instalares esta app.</span>
+    <button id="ios-install-close" class="app-banner-close" aria-label="Fechar">✕</button>
+  </div>
+
+  <!-- 🔄 Banner de nova versão disponível -->
+  <div id="update-banner" class="app-banner app-banner-action" hidden>
+    <button id="update-banner-btn" class="app-banner-action-btn">
+      <span class="app-banner-icon">🔄</span>
+      <span id="update-banner-text">Nova versão disponível — toca para atualizar</span>
+    </button>
+  </div>
+
   <header>
     <!-- Selector de idioma -->
     <div class="lang-switcher">
@@ -313,7 +328,7 @@
     <div class="modal-dialog" role="dialog" aria-modal="true">
       <button class="modal-close" id="modal-close-btn" aria-label="Fechar">✕</button>
 
-      <img id="modal-photo" class="modal-photo" alt="" loading="lazy" hidden / referrerpolicy="no-referrer">
+      <img id="modal-photo" class="modal-photo" alt="" loading="lazy" referrerpolicy="no-referrer" hidden>
 
       <div class="modal-header">
         <h2 id="modal-title">Nome do local</h2>
@@ -369,6 +384,11 @@
         <div class="tab-panel" id="panel-map">
           <div class="map-preview">
             <iframe id="modal-map-iframe" title="Mapa" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <div id="map-offline-msg" class="map-offline-msg" hidden>
+              <span class="map-offline-icon">🌐</span>
+              <p id="map-offline-text">Precisas de ligação à internet para ver o mapa aqui.</p>
+              <button id="map-offline-btn" class="primary-btn">📍 Abrir no Google Maps</button>
+            </div>
           </div>
           <p id="modal-map-text"></p>
           <button id="modal-open-maps" class="primary-btn">
@@ -430,11 +450,28 @@
 
   <script src="app.js"></script>
   <script>
-    // Registo do service worker para PWA
+    // Registo do service worker para PWA + aviso de nova versão disponível
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('service-worker.js').catch(console.error);
+        navigator.serviceWorker.register('service-worker.js').then((reg) => {
+          reg.addEventListener('updatefound', () => {
+            const newWorker = reg.installing;
+            if (!newWorker) return;
+            newWorker.addEventListener('statechange', () => {
+              // "installed" + já existe um controller ativo = isto é uma atualização, não a 1ª instalação
+              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                const banner = document.getElementById('update-banner');
+                if (banner) banner.hidden = false;
+              }
+            });
+          });
+        }).catch(console.error);
       });
+
+      const updateBannerBtn = document.getElementById('update-banner-btn');
+      if (updateBannerBtn) {
+        updateBannerBtn.addEventListener('click', () => window.location.reload());
+      }
     }
   </script>
 </body>

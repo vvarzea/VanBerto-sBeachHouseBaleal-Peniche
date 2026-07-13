@@ -562,6 +562,7 @@ footer {
 
 /* MAP PREVIEW (MODAL) */
 .map-preview {
+  position: relative;
   width: 100%;
   height: 210px;
   border-radius: 16px;
@@ -576,6 +577,104 @@ footer {
   height: 100%;
   border: 0;
   background: rgba(15, 23, 42, 0.5);
+}
+
+/* Estado offline do mini-mapa */
+.map-offline-msg {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-align: center;
+  padding: 16px;
+  background: rgba(5, 11, 36, 0.92);
+}
+
+.map-offline-icon {
+  font-size: 1.6rem;
+}
+
+.map-offline-msg p {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  max-width: 260px;
+}
+
+/* BANNERS DE TOPO (instalação iOS / nova versão) */
+.app-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  background: var(--bg-elevated);
+  border-bottom: 1px solid var(--border-soft);
+  color: var(--text-main);
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+.app-banner-icon {
+  font-size: 1.05rem;
+  flex-shrink: 0;
+}
+
+.app-banner-text {
+  flex: 1;
+}
+
+.app-banner-text strong {
+  color: var(--accent-soft);
+}
+
+.app-banner-close {
+  flex-shrink: 0;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  cursor: pointer;
+  padding: 4px 6px;
+}
+
+.app-banner-close:hover {
+  color: var(--text-main);
+}
+
+.app-banner-action {
+  padding: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.app-banner-action-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  cursor: pointer;
+  padding: 10px 16px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent), var(--accent-alt));
+}
+
+@media (prefers-color-scheme: light) {
+  .app-banner {
+    background: #f8fafc;
+    border-bottom-color: rgba(15, 23, 42, 0.12);
+    color: #0f172a;
+  }
+  .app-banner-close {
+    color: #475569;
+  }
+  .app-banner-close:hover {
+    color: #0f172a;
+  }
 }
 
 /* QR MODAL */
