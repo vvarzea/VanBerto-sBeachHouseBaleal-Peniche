@@ -3,6 +3,22 @@ function isFoodBizCategory(cat){
   return cat === "Restaurantes" || cat === "Bares" || cat === "FastFood" || cat === "Churrasqueiras";
 }
 
+// --------- LOCALIZAÇÃO DA CASA ---------
+const HOUSE_LOCATION = {
+  nome: "VanBerto's Beach House",
+  morada: "Rua do Salgado 1, Ferrel, Peniche",
+  lat: 39.356494,
+  lng: -9.354807
+};
+function houseMapsUrl(){
+  return "https://www.google.com/maps/search/?api=1&query=" +
+    encodeURIComponent(HOUSE_LOCATION.lat + "," + HOUSE_LOCATION.lng);
+}
+function houseDirectionsUrl(){
+  return "https://www.google.com/maps/dir/?api=1&destination=" +
+    encodeURIComponent(HOUSE_LOCATION.lat + "," + HOUSE_LOCATION.lng);
+}
+
 // --------- ESTADO GLOBAL ---------
 let currentLang = "pt";
 let currentCategory = "tudo";
@@ -19,6 +35,7 @@ const cardsContainer = document.getElementById("cards-container");
 
 // Botão Instalar (PWA)
 const installBtn = document.getElementById("btn-install");
+const directionsBtn = document.getElementById("directions-btn");
 let deferredInstallPrompt = null;
 
 window.addEventListener("beforeinstallprompt", (e) => {
@@ -31,6 +48,10 @@ window.addEventListener("appinstalled", () => {
   deferredInstallPrompt = null;
   if (installBtn) installBtn.hidden = true;
 });
+
+if (directionsBtn){
+  directionsBtn.href = houseDirectionsUrl();
+}
 
 if (installBtn){
   installBtn.addEventListener("click", async () => {
@@ -413,8 +434,6 @@ const data = {
       descES: "Restaurante clásico de Peniche para pescado fresco y marisco. Ambiente familiar y auténtico.",
       descFR: "Restaurant classique de Peniche pour poisson frais et fruits de mer. Ambiance familiale et authentique.",
       tipVB: "Um dos nossos favoritos! O peixe grelhado e as amêijoas à Bulhão Pato são imperdíveis.",
-      horarioPT: "Seg e Ter: Fechado | Qua–Sáb: 12h–15h e 19h–22h | Dom: 12h–15h",
-      horarioEN: "Mon & Tue: Closed | Wed–Sat: 12:00–15:00 & 19:00–22:00 | Sun: 12:00–15:00",
       mapa: "Tasca do Joel Peniche"
     },
     {
@@ -460,8 +479,6 @@ const data = {
       descES: "Restaurante moderno con vista al mar, cócteles y ambiente animado.",
       descFR: "Restaurant tendance avec vue sur la mer, cocktails et ambiance animée.",
       tipVB: "Ótimo para um jantar com vista para o oceano. Os cocktails são muito bons!",
-      horarioPT: "Seg–Sáb: Jantar (almoço só com marcação) | Dom: Fechado",
-      horarioEN: "Mon–Sat: Dinner only (lunch by appointment) | Sun: Closed",
       mapa: "Mundano Baleal"
     },
     {
@@ -471,8 +488,6 @@ const data = {
       descES: "Justo en la playa de Baleal, buena comida y ambiente veraniego.",
       descFR: "Directement sur la plage de Baleal, bonne cuisine et ambiance estivale.",
       tipVB: "Adoramos o pequeno-almoço aqui ao fim de semana — os ovos Benedict são de outro mundo!",
-      horarioPT: "Dom–Ter: 11h–17h | Qua–Sáb: 11h–00h",
-      horarioEN: "Sun–Tue: 11:00–17:00 | Wed–Sat: 11:00–00:00",
       mapa: "Maresia Baleal"
     },
     {
@@ -673,58 +688,21 @@ const data = {
 
   ],
   Eventos: [{
-      nome: "WSL Supertubos 2026 – Campeonato Mundial de Surf",
-      descPT: "A elite mundial do surf regressa a Peniche! Janela de espera: 22 Out a 1 Nov 2026. Entrada gratuita.",
-      descEN: "The world's best surfers return to Peniche! Event window: 22 Oct to 1 Nov 2026. Free entry.",
-      descES: "¡Los mejores surfistas vuelven a Peniche! 22 oct al 1 nov 2026. Entrada gratuita.",
-      descFR: "Les meilleurs surfeurs reviennent à Peniche ! 22 oct au 1 nov 2026. Entrée gratuite.",
-      tipVB: "Um dos eventos mais espetaculares que podes ver de graça no mundo! Chega cedo para arranjar bom lugar na areia.",
-      dataISO: "2026-10-22",
-      mapa: "Praia dos Supertubos"
-    },
-    {
-      nome: "Mercado Municipal de Peniche – Sábados",
-      descPT: "Peixe fresquíssimo, produtos regionais e o ritmo autêntico de Peniche. Todos os sábados de manhã.",
-      descEN: "Super fresh fish, regional produce and the real Peniche vibe. Every Saturday morning.",
-      descES: "Pescado fresco, productos regionales y el auténtico ritmo de Peniche. Todos los sábados.",
-      descFR: "Poisson ultra-frais et l'ambiance authentique de Peniche. Tous les samedis matin.",
-      tipVB: "Vão de manhã cedo ao sábado — é quando está mais animado e o peixe está mais fresco!",
+      nome: "Mercado Municipal de Peniche",
+      descPT: "Bom local para ver peixe fresco, produtos regionais e sentir o ritmo da cidade.",
+      descEN: "Great place to see fresh fish, regional products and the town vibe.",
       mapa: "Mercado Municipal de Peniche"
     },
     {
-      nome: "Cabo Carvoeiro – Pôr do Sol",
-      descPT: "Miradouro com vista deslumbrante sobre o Atlântico. O melhor pôr do sol de Peniche — todos os dias.",
-      descEN: "Stunning viewpoint over the Atlantic. The best sunset in Peniche — every evening.",
-      descES: "Mirador con vistas al Atlántico. El mejor atardecer de Peniche — todos los días.",
-      descFR: "Vue imprenable sur l'Atlantique. Le plus beau coucher de soleil de Peniche — chaque soir.",
-      tipVB: "Levem um lanche e uma manta — há mesas de picnic e o ambiente ao pôr do sol é simplesmente mágico.",
+      nome: "Cabo Carvoeiro (pôr do sol)",
+      descPT: "Miradouro com vistas incríveis. Sugestão: ir ao final da tarde para ver o pôr do sol.",
+      descEN: "Viewpoint with amazing scenery. Tip: go in the late afternoon for sunset.",
       mapa: "Cabo Carvoeiro"
     },
     {
-      nome: "Festival do Marisco de Peniche",
-      descPT: "Festival gastronómico anual com marisco fresco, música ao vivo e muita animação. Geralmente em julho/agosto.",
-      descEN: "Annual seafood festival with fresh shellfish, live music and great atmosphere. Usually July/August.",
-      descES: "Festival gastronómico anual con marisco fresco y música en vivo. Generalmente julio/agosto.",
-      descFR: "Festival gastronomique annuel avec fruits de mer frais et musique live. Généralement juillet/août.",
-      tipVB: "Um dos pontos altos do verão em Peniche — marisco fresco, muita música e boa disposição!",
-      mapa: "Peniche"
-    },
-    {
-      nome: "Travessia a Nado Ilha do Baleal",
-      descPT: "Prova de natação em mar aberto muito popular entre os locais. Acontece anualmente no verão.",
-      descEN: "Popular open water swimming race among locals. Takes place annually in summer.",
-      descES: "Popular carrera de natación en aguas abiertas. Se celebra anualmente en verano.",
-      descFR: "Course de natation en eau libre très populaire. A lieu chaque année en été.",
-      tipVB: "Muito animado de ver mesmo sem participar! O Baleal fica muito colorido e festivo nesse dia.",
-      mapa: "Ilha do Baleal"
-    },
-    {
       nome: "Praia dos Supertubos (surf em época)",
-      descPT: "Quando há provas, Supertubos recebe competições de surf. Confirma cartazes e redes sociais.",
-      descEN: "During event weeks, Supertubos hosts surf competitions. Check social media for updates.",
-      descES: "Durante las semanas de evento, Supertubos acoge competiciones de surf.",
-      descFR: "Lors des semaines d'événement, Supertubos accueille des compétitions de surf.",
-      tipVB: "Se coincidires com uma prova é inesquecível! A atmosfera é incrível e a entrada é sempre gratuita.",
+      descPT: "Quando há provas, Supertubos recebe competições de surf. Confirma cartazes e redes sociais na semana.",
+      descEN: "During event weeks, Supertubos hosts surf competitions. Check posters and social media that week.",
       mapa: "Praia dos Supertubos"
     }
 ,
@@ -1521,28 +1499,11 @@ function setupQuickActions(item, cat){
 
 
 function autoPhotoUrl(cat, item){
-  // Unsplash Source (sem API key). Nota: precisa de internet.
-  // Se um dia quiseres substituir, basta meter item.img.
-  const qMap = {
-    Praias: "peniche,beach,atlantic,ocean,coast",
-    Restaurantes: "portuguese,food,seafood,restaurant",
-    Bares: "bar,cocktail,night,drinks",
-    FastFood: "burger,pizza,street food",
-    Churrasqueiras: "grill,bbq,meat,restaurant",
-    Supermercados: "grocery,supermarket,market",
-    Eventos: "festival,concert,event,crowd",
-    Locais: "peniche,portugal,landmark,cliffs",
-    Alojamento: "apartment,interior,cozy,travel"
-  };
-  const baseQ = qMap[cat] || "peniche,portugal,travel";
-  const nameQ = item && item.nome ? String(item.nome).replace(/[^\w\s-]/g," ").trim().replace(/\s+/g,",") : "";
-  const query = (nameQ ? (nameQ + "," + baseQ) : baseQ);
-
-  // Usamos endpoint "featured" com tamanho fixo para ficar consistente.
-  // Adicionamos um cache-buster suave por dia (para não mudar a cada refresh).
-  const today = new Date();
-  const salt = `${today.getFullYear()}${String(today.getMonth()+1).padStart(2,'0')}${String(today.getDate()).padStart(2,'0')}`;
-  return `https://source.unsplash.com/1200x800/?${encodeURIComponent(query)}&sig=${salt}`;
+  // NOTA: o serviço "Unsplash Source" (source.unsplash.com) foi descontinuado
+  // pela Unsplash em 2021 e já não responde (dá erro). Por isso deixámos de o usar.
+  // Em vez disso, quando um local não tem item.img próprio, usamos o
+  // placeholder SVG local (imgByCat) — que é 100% offline e sempre funciona.
+  return (imgByCat && imgByCat[cat]) || imgByCat.Locais;
 }
 
 
@@ -1685,6 +1646,7 @@ function atualizarTextosEstaticos() {
       btnShareFavs: "🔗 Partilhar favoritos (QR)",
       searchPh: "🔍 Procurar por praia, restaurante, pizza, sushi...",
       contact: "📱 966 944 973",
+      directions: "📍 Como chegar à casa",
       footer1: "📍 VanBerto's Beach House · Baleal · Peniche",
       footer2: "🌊 Guia rápido para aproveitares o melhor da tua estadia",
       tabInfo: "ℹ️ Info",
@@ -1721,6 +1683,7 @@ function atualizarTextosEstaticos() {
       btnShareFavs: "🔗 Share favourites (QR)",
       searchPh: "🔍 Search for beach, restaurant, pizza, sushi...",
       contact: "📱 966 944 973",
+      directions: "📍 Get directions to the house",
       footer1: "📍 VanBerto's Beach House · Baleal · Peniche",
       footer2: "🌊 Quick guide to enjoy the best of your stay",
       tabInfo: "ℹ️ Info",
@@ -1757,6 +1720,7 @@ function atualizarTextosEstaticos() {
       btnShareFavs: "🔗 Compartir favoritos (QR)",
       searchPh: "🔍 Buscar playa, restaurante, pizza, sushi...",
       contact: "📱 966 944 973",
+      directions: "📍 Cómo llegar a la casa",
       footer1: "📍 VanBerto's Beach House · Baleal · Peniche",
       footer2: "🌊 Guía rápida para disfrutar tu estancia",
       tabInfo: "ℹ️ Info",
@@ -1793,6 +1757,7 @@ function atualizarTextosEstaticos() {
       btnShareFavs: "🔗 Partager les favoris (QR)",
       searchPh: "🔍 Chercher plage, restaurant, pizza, sushi...",
       contact: "📱 966 944 973",
+      directions: "📍 Comment venir à la maison",
       footer1: "📍 VanBerto's Beach House · Baleal · Peniche",
       footer2: "🌊 Guide rapide pour profiter de ton séjour",
       tabInfo: "ℹ️ Info",
@@ -1834,6 +1799,7 @@ function atualizarTextosEstaticos() {
 
   searchInput.placeholder = t.searchPh;
   contactBtn.textContent = t.contact;
+  if (directionsBtn) directionsBtn.textContent = t.directions;
   footer1.textContent = t.footer1;
   footer2.textContent = t.footer2;
 
@@ -1887,7 +1853,7 @@ function abrirTodasNoMapa() {
   });
 
   const waypoints = todos.map(encodeURIComponent).join("|");
-  const destino = encodeURIComponent("Peniche");
+  const destino = encodeURIComponent(HOUSE_LOCATION.lat + "," + HOUSE_LOCATION.lng);
   const url =
     "https://www.google.com/maps/dir/?api=1&destination=" +
     destino +

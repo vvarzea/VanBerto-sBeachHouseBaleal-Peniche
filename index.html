@@ -8,8 +8,8 @@
   <meta name="theme-color" content="#050b24" />
 
   <link rel="manifest" href="manifest.json" />
-  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png" />
-  <link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -77,59 +77,7 @@
         </div>
       </div>
     </section>
-<!-- 🚨 Contactos de Emergência -->
-    <details class="emergency-section" id="emergency-details">
-      <summary id="emergency-title">🚨 Contactos de emergência e números úteis</summary>
-      <div class="emergency-grid">
-        <a href="tel:112" class="emergency-item">
-          <span class="e-label">Emergência geral</span>
-          <span class="e-name">🚒🚑🚓 Emergências</span>
-          <span class="e-num">112</span>
-        </a>
-        <a href="tel:+351262780310" class="emergency-item">
-          <span class="e-label">Hospital</span>
-          <span class="e-name">🏥 Hospital de Peniche</span>
-          <span class="e-num">262 780 310</span>
-        </a>
-        <a href="tel:+351262785117" class="emergency-item">
-          <span class="e-label">Segurança</span>
-          <span class="e-name">👮 GNR Peniche</span>
-          <span class="e-num">262 785 117</span>
-        </a>
-        <a href="tel:+351262782135" class="emergency-item">
-          <span class="e-label">Farmácia</span>
-          <span class="e-name">💊 Farmácia Central</span>
-          <span class="e-num">262 782 135</span>
-        </a>
-        <a href="tel:+351262782100" class="emergency-item">
-          <span class="e-label">Farmácia</span>
-          <span class="e-name">💊 Farmácia Proença</span>
-          <span class="e-num">262 782 100</span>
-        </a>
-        <a href="tel:+351262782415" class="emergency-item">
-          <span class="e-label">Farmácia</span>
-          <span class="e-name">💊 Farmácia Bento</span>
-          <span class="e-num">262 782 415</span>
-        </a>
-        <a href="tel:+351262759171" class="emergency-item">
-          <span class="e-label">Farmácia (Atouguia)</span>
-          <span class="e-name">💊 Farmácia Confiança</span>
-          <span class="e-num">262 759 171</span>
-        </a>
-        <a href="tel:+351262789500" class="emergency-item">
-          <span class="e-label">Táxi</span>
-          <span class="e-name">🚕 Táxi Peniche</span>
-          <span class="e-num">262 789 500</span>
-        </a>
-        <a href="tel:+351262789620" class="emergency-item">
-          <span class="e-label">Câmara Municipal</span>
-          <span class="e-name">🏛️ CM Peniche</span>
-          <span class="e-num">262 789 620</span>
-        </a>
-      </div>
-    </details>
-
-    <!-- Barra de pesquisa -->
+<!-- Barra de pesquisa -->
     <section class="search-row">
       <input
         type="search"
@@ -280,12 +228,6 @@
       </div>
 
       <div class="modal-content">
-  <!-- 🌤️ Meteorologia -->
-  <div id="modal-meteo" class="modal-meteo">
-    <div class="meteo-local">🌤️ Peniche & Baleal</div>
-    <div id="meteo-info">A carregar meteorologia…</div>
-  </div>
-
         <p id="qr-text" class="qr-text"></p>
         <div class="qr-wrap">
           <canvas id="qr-canvas" width="220" height="220" aria-label="QR code"></canvas>
@@ -301,6 +243,11 @@
 
   <!-- Contacto e rodapé -->
   <div class="contact-bottom" style="gap:10px;flex-wrap:wrap;">
+    <a href="#" target="_blank" rel="noopener noreferrer" id="directions-btn" class="contact-btn"
+       style="background:linear-gradient(135deg,#f5b800,#f47c20);color:#fff;">
+      📍 Como chegar à casa
+    </a>
+
     <a href="tel:+351966944973" class="contact-btn" id="contact-btn">
       📱 966 944 973
     </a>
