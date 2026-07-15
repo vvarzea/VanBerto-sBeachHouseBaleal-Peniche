@@ -464,6 +464,46 @@ header {
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.9);
 }
 
+/* Botões de contacto com cor própria (direções / WhatsApp) */
+.contact-btn-directions {
+  background: linear-gradient(135deg, #f5b800, #f47c20);
+  color: #fff;
+}
+.contact-btn-whatsapp {
+  background: linear-gradient(135deg, #25d366, #128c4e);
+  color: #fff;
+}
+.contact-btn-icon {
+  flex-shrink: 0;
+}
+
+/* Dica da Vanda e do Berto (dentro do modal de detalhes) */
+.modal-owner-tip {
+  display: none;
+  align-items: flex-start;
+  gap: 8px;
+  background: linear-gradient(135deg, rgba(245, 184, 0, 0.10), rgba(244, 124, 32, 0.06));
+  border: 1px solid rgba(245, 184, 0, 0.22);
+  border-radius: 10px;
+  padding: 10px 13px;
+  margin-bottom: 10px;
+  font-size: 0.84rem;
+  color: rgba(255, 255, 255, 0.88);
+}
+.modal-owner-tip-icon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+.modal-owner-tip-label {
+  display: block;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #f5b800;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
 footer {
   text-align: center;
   font-size: 12px;

@@ -111,9 +111,9 @@
       <div class="home-meteo-grid">
         <div class="home-meteo-card home-house-card">
           <div class="home-meteo-card-title" id="i18n-wifi-title">📶 WiFi</div>
-          <div class="home-meteo-main" id="wifi-ssid">VanBerto's</div>
+          <div class="home-meteo-main" id="wifi-ssid"></div>
           <div class="home-meteo-sub home-house-wifi-row">
-            <span id="i18n-wifi-password-label">Password:</span> <span id="wifi-pass">VanBertos2026</span>
+            <span id="i18n-wifi-password-label">Password:</span> <span id="wifi-pass"></span>
             <button type="button" id="wifi-copy-btn" class="home-house-copy-btn">📋 Copiar</button>
           </div>
         </div>
@@ -337,10 +337,10 @@
       <p class="modal-category" id="modal-category"></p>
 
       <!-- Dica da Vanda e do Berto -->
-      <div id="modal-owner-tip" style="display:none; background:linear-gradient(135deg,rgba(245,184,0,0.10),rgba(244,124,32,0.06)); border:1px solid rgba(245,184,0,0.22); border-radius:10px; padding:10px 13px; font-size:0.84rem; color:rgba(255,255,255,0.88); margin-bottom:10px; align-items:flex-start; gap:8px;">
-        <span style="font-size:1.1rem;flex-shrink:0">🤙</span>
+      <div id="modal-owner-tip" class="modal-owner-tip">
+        <span class="modal-owner-tip-icon">🤙</span>
         <div>
-          <span style="display:block;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.08em;color:#f5b800;font-weight:700;margin-bottom:2px">Dica da Vanda e do Berto</span>
+          <span class="modal-owner-tip-label">Dica da Vanda e do Berto</span>
           <span id="modal-owner-tip-text"></span>
         </div>
       </div>
@@ -425,9 +425,8 @@
   </div>
 
   <!-- Contacto e rodapé -->
-  <div class="contact-bottom" style="gap:10px;flex-wrap:wrap;">
-    <a href="#" target="_blank" rel="noopener noreferrer" id="directions-btn" class="contact-btn"
-       style="background:linear-gradient(135deg,#f5b800,#f47c20);color:#fff;">
+  <div class="contact-bottom">
+    <a href="#" target="_blank" rel="noopener noreferrer" id="directions-btn" class="contact-btn contact-btn-directions">
       📍 Como chegar à casa
     </a>
 
@@ -436,9 +435,8 @@
     </a>
 
     <a href="https://wa.me/351966944973" target="_blank" rel="noopener noreferrer"
-       class="contact-btn" id="whatsapp-contact-btn"
-       style="background:linear-gradient(135deg,#25d366,#128c4e);color:#fff;">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.558 4.116 1.535 5.845L.057 23.454a.75.75 0 0 0 .918.918l5.65-1.48A11.94 11.94 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75a9.726 9.726 0 0 1-4.964-1.36l-.355-.212-3.683.965.981-3.586-.232-.368A9.726 9.726 0 0 1 2.25 12C2.25 6.615 6.615 2.25 12 2.25S21.75 6.615 21.75 12 17.385 21.75 12 21.75z"/></svg>
+       class="contact-btn contact-btn-whatsapp" id="whatsapp-contact-btn">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="contact-btn-icon"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.558 4.116 1.535 5.845L.057 23.454a.75.75 0 0 0 .918.918l5.65-1.48A11.94 11.94 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75a9.726 9.726 0 0 1-4.964-1.36l-.355-.212-3.683.965.981-3.586-.232-.368A9.726 9.726 0 0 1 2.25 12C2.25 6.615 6.615 2.25 12 2.25S21.75 6.615 21.75 12 17.385 21.75 12 21.75z"/></svg>
       WhatsApp
     </a>
   </div>
@@ -448,7 +446,21 @@
     <span id="footer-line2">🌊 Guia rápido para aproveitares o melhor da tua estadia</span>
   </footer>
 
-  <script src="app.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/dom-refs.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/utils-favoritos.js"></script>
+  <script src="js/render.js"></script>
+  <script src="js/modal.js"></script>
+  <script src="js/language.js"></script>
+  <script src="js/maps-events.js"></script>
+  <script src="js/qrcode-lib.js"></script>
+  <script src="js/home-sections.js"></script>
+  <script src="js/home-i18n.js"></script>
+  <script src="js/meteo.js"></script>
+  <script src="js/calendar.js"></script>
+  <script src="js/init-share.js"></script>
+  <script src="js/modal-extra-info.js"></script>
   <script>
     // Registo do service worker para PWA + aviso de nova versão disponível
     if ('serviceWorker' in navigator) {

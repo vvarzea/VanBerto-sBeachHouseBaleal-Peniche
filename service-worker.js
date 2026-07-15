@@ -1,13 +1,27 @@
 /* VanBerto's PWA Service Worker (offline-first) */
-const CACHE_VERSION = "vanbertos-v18";
+const CACHE_VERSION = "vanbertos-v19";
 const FONTS_CACHE = "vanbertos-fonts-v1";
 const CORE_ASSETS = [
   "./",
   "./index.html",
   "./style.css",
-  "./app.js",
   "./manifest.json",
-  "./logo-vanbertos.png"
+  "./logo-vanbertos.png",
+  "./js/config.js",
+  "./js/dom-refs.js",
+  "./js/data.js",
+  "./js/utils-favoritos.js",
+  "./js/render.js",
+  "./js/modal.js",
+  "./js/language.js",
+  "./js/maps-events.js",
+  "./js/qrcode-lib.js",
+  "./js/home-sections.js",
+  "./js/home-i18n.js",
+  "./js/init-share.js",
+  "./js/meteo.js",
+  "./js/calendar.js",
+  "./js/modal-extra-info.js"
 ];
 
 self.addEventListener("install", (event) => {
